@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<DemoShop_QuaMonMot.Models.HangHoa>
+@{
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPage = ViewBag.TotalPage ?? 1;
+}
+
+<!-- Shop Product Start -->
+<div class="row pb-3">
+    <div class="col-12 pb-1">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+            </div>
+            <div class="ml-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#">Latest</a>
+                        <a class="dropdown-item" href="#">Popularity</a>
+                        <a class="dropdown-item" href="#">Best Rating</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Nút Thêm sản phẩm mới (Chỉ Admin thấy) *@
+    @if (Context.Session.GetInt32("VaiTro") == 1)
+    {
+        <div class="col-12 mb-4">
+            <a asp-controller="Admin" asp-action="Create" class="btn btn-primary font-weight-bold py-2 px-4">
+                <i class="fa fa-plus mr-2"></i> Thêm sản phẩm mới
+            </a>
+        </div>
+    }
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh">
+                    <div class="product-action">
+                        <a class="btn btn-outline-dark btn-square" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh"><i class="fa fa-shopping-cart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="text-center py-4 px-2">
+                    <a class="h6 text-decoration-none text-truncate d-block" href="">@item.TenHh</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        <h5>$@item.DonGia</h5><h6 class="text-muted ml-2"><del>$@item.DonGia</del></h6>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-1">
+                        <small class="fa fa-eye text-primary mr-2"></small>
+                        <small>@item.SoLanXem lượt xem</small>
+                    </div>
+
+                    @* KHU VỰC QUẢN TRỊ: Sửa & Xóa *@
+                    @if (Context.Session.GetInt32("VaiTro") == 1)
+                    {
+                        <div class="d-flex align-items-center justify-content-center mt-3 pt-2 border-top">
+                            <a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.MaHh" class="btn btn-sm btn-warning mr-2">
+                                <i class="fa fa-edit"></i> Sửa
+                            </a>
+                            <form asp-controller="Admin" asp-action="DeleteHangHoa" asp-route-id="@item.MaHh"
+                                  method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i> Xóa
+                                </button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(currentPage - 1)">Previous</a>
+                </li>
+                @for (int i = 1; i <= totalPage; i++)
+                {
+                    <li class="page-item @(currentPage == i ? "active" : "")">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item @(currentPage >= totalPage ? "disabled" : "")">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(currentPage + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

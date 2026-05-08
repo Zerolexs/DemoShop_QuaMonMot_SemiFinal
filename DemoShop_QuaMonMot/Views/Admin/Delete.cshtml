@@ -1,0 +1,26 @@
+﻿@model DemoShop_QuaMonMot.Models.HangHoa
+@{
+    ViewData["Title"] = "Xác nhận xóa sản phẩm";
+}
+
+<div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cảnh báo xóa</span></h2>
+    <div class="row px-xl-5 justify-content-center">
+        <div class="col-lg-6 bg-light p-30 text-center">
+            <h4 class="text-danger">Bạn có chắc chắn muốn xóa vĩnh viễn sản phẩm này?</h4>
+            <div class="my-4">
+                <img src="~/Hinh/HangHoa/@Model.Hinh" style="width:200px;" class="img-thumbnail" />
+                <h3 class="mt-2">@Model.TenHh</h3>
+                <p>Mã sản phẩm: @Model.MaHh</p>
+                <p>Giá: $@Model.DonGia</p>
+            </div>
+
+            <form asp-action="DeleteConfirmed">
+                @* Action thực thi xóa trong Controller *@
+                <input type="hidden" asp-for="MaHh" />
+                <button type="submit" class="btn btn-danger py-2 px-4 font-weight-bold">XÁC NHẬN XÓA</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary py-2 px-4">HỦY BỎ</a>
+            </form>
+        </div>
+    </div>
+</div>

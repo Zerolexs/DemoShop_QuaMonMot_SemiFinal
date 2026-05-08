@@ -1,0 +1,82 @@
+﻿@* Chỉ định rõ Namespace để tránh lỗi Ambiguous reference *@
+@model DemoShop_QuaMonMot.DTOs.Login
+
+@{
+    ViewData["Title"] = "Đăng Nhập Hệ Thống";
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                <span class="breadcrumb-item active">Đăng nhập</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row px-xl-5 justify-content-center">
+        <div class="col-lg-5 col-md-8">
+            <h5 class="section-title position-relative text-uppercase mb-3">
+                <span class="bg-secondary pr-3">Đăng Nhập</span>
+            </h5>
+            <div class="bg-light p-30 mb-5">
+                @* Lưu ý: asp-route-returnurl giúp giữ địa chỉ trang trước đó *@
+                <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl" method="post">
+
+                    @* Hiển thị thông báo lỗi tổng quát từ Controller *@
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    @if (ViewData.ModelState.ContainsKey("loi"))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            @ViewData.ModelState["loi"].Errors[0].ErrorMessage
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label asp-for="UserName">Tên đăng nhập</label>
+                        <input asp-for="UserName" class="form-control" placeholder="Tên đăng nhập của bạn" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password">Mật khẩu</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="******" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <div>
+                                <input type="checkbox" asp-for="RememberLogin" class="custom-control-input" id="remember-me">
+                                <label class="custom-control-label" for="remember-me">Ghi nhớ đăng nhập</label>
+                            </div>
+                            <a href="#" class="small text-primary">Quên mật khẩu?</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">Đăng Nhập</button>
+                    </div>
+
+                    <hr />
+
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Bạn chưa có tài khoản?</p>
+                        <a asp-controller="KhachHang" asp-action="DangKy" class="font-weight-bold">Đăng ký thành viên mới</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Script này giúp kiểm tra lỗi ngay tại trình duyệt mà không cần load lại trang *@
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
