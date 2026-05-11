@@ -13,27 +13,33 @@
             <div class="d-inline-flex align-items-center">
                 @using Microsoft.AspNetCore.Http
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-                        @* Nếu Session có tên thì hiện tên, không thì hiện My Account *@
-                        @(Context.Session.GetString("HoTen") ?? "Tài Khoản")
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        @if (Context.Session.GetString("MaKh") != null)
-                        {
-                            @* Khi đã đăng nhập *@
-                            <a class="dropdown-item" href="#">Hồ sơ của tôi</a>
-                            <a class="dropdown-item" href="#">Đơn hàng đã mua</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-controller="KhachHang" asp-action="DangXuat">Đăng xuất</a>
-                        }
-                        else
-                        {
-                            @* Khi chưa đăng nhập *@
-                            <a class="dropdown-item" asp-controller="KhachHang" asp-action="DangNhap">Đăng nhập</a>
-                            <a class="dropdown-item" asp-controller="KhachHang" asp-action="DangKy">Đăng ký</a>
-                        }
-                    </div>
+                <div class="d-inline-flex align-items-center">
+                    @if (Context.Session.GetString("MaKh") != null)
+                    {
+                        @* TRƯỜNG HỢP: Đã đăng nhập - Hiển thị Dropdown tên người dùng *@
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user mr-1"></i>
+                                @(Context.Session.GetString("HoTen") ?? "Tài Khoản")
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" asp-controller="KhachHang" asp-action="Profile">Hồ sơ của tôi</a>
+                                <a class="dropdown-item" href="#">Đơn hàng đã mua</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" asp-controller="KhachHang" asp-action="DangXuat">
+                                    <i class="fa fa-sign-out-alt mr-2"></i>Đăng xuất
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @* TRƯỜNG HỢP: Chưa đăng nhập - Hiển thị trực tiếp nút Đăng nhập *@
+                        <a class="btn btn-sm btn-light font-weight-bold" asp-controller="KhachHang" asp-action="DangNhap">
+                            <i class="fa fa-sign-in-alt mr-1"></i> Đăng nhập
+                        </a>
+                    }
+                </div>
                 </div>
                 <div class="btn-group mx-2">
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
@@ -144,7 +150,7 @@
                             <i class="fas fa-heart text-primary"></i>
                             <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                         </a>
-                        <a href="" class="btn px-0 ml-3">
+                        <a asp-controller="Cart" asp-action="Index" class="btn px-0 ml-3">
                             <i class="fas fa-shopping-cart text-primary"></i>
                             <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                         </a>

@@ -1,39 +1,30 @@
-﻿  <h5 class="section-title position-relative text-uppercase mb-3">
+﻿<h5 class="section-title position-relative text-uppercase mb-3">
     <span class="bg-secondary pr-3">Filter by Category</span>
 </h5>
 <div class="bg-light p-4 mb-30">
-    <form>
-        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-            <input type="checkbox" class="custom-control-input" id="cat-all"
-                   @(Context.Request.Query["maLoai"].Count == 0 ? "checked" : "")>
-            <label class="custom-control-label" for="cat-all">
-                <a asp-action="Index" asp-controller="Home"
-                   asp-route-priceRanges="@Context.Request.Query["priceRanges"]"
-                   class="text-dark">All Categories</a>
-            </label>
-            <span class="badge border font-weight-normal">@ViewBag.AllCount</span>
-        </div>
-        
-        @if (ViewBag.DanhMuc != null)
+    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+        <input type="checkbox" class="custom-control-input" id="cat-all"
+               @(Context.Request.Query["maLoai"].Count == 0 ? "checked" : "")
+               onclick="window.location.href='@Url.Action("Index", "Home", new { priceRanges = Context.Request.Query["priceRanges"] })'">
+        <label class="custom-control-label" for="cat-all">All Categories</label>
+        <span class="badge border font-weight-normal">@ViewBag.AllCount</span>
+    </div>
+
+    @if (ViewBag.DanhMuc != null)
+    {
+        foreach (var item in ViewBag.DanhMuc)
         {
-            foreach (var item in ViewBag.DanhMuc)
-            {
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" class="custom-control-input" id="cat-@item.MaLoai"
-                           @(Context.Request.Query["maLoai"] == item.MaLoai.ToString() ? "checked" : "")>
-                    <label class="custom-control-label" for="cat-@item.MaLoai">
-                        <a asp-action="Index" asp-controller="Home"
-                           asp-route-maLoai="@item.MaLoai"
-                           asp-route-priceRanges="@Context.Request.Query["priceRanges"]"
-                           class="text-dark">@item.TenLoai</a>
-                    </label>
-                    <span class="badge border font-weight-normal">@item.SoLuong</span>
-                </div>
-            }
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="checkbox" class="custom-control-input" id="cat-@item.MaLoai"
+                       @(Context.Request.Query["maLoai"].ToString() == item.MaLoai.ToString() ? "checked" : "")
+                       onclick="window.location.href='@Url.Action("Index", "Home", new { maLoai = item.MaLoai, priceRanges = Context.Request.Query["priceRanges"] })'">
+                <label class="custom-control-label" for="cat-@item.MaLoai">@item.TenLoai</label>
+                <span class="badge border font-weight-normal">@item.SoLuong</span>
+            </div>
         }
-        else
-        {
-            <p class="text-muted small">Không có dữ liệu danh mục</p>
-        }
-    </form>
+    }
+    else
+    {
+        <p class="text-muted small">Không có dữ liệu danh mục</p>
+    }
 </div>

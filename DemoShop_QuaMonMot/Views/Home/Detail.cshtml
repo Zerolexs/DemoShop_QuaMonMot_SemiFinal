@@ -1,0 +1,93 @@
+﻿@model DemoShop_QuaMonMot.Models.HangHoa
+
+@{
+    ViewData["Title"] = Model.TenHh;
+}
+
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <!-- Bên trái: Hình ảnh sản phẩm -->
+        <div class="col-lg-5 mb-30">
+            <div class="bg-light p-3">
+                <img class="w-100 h-auto" src="~/Hinh/HangHoa/@Model.Hinh" alt="@Model.TenHh"
+                     onerror="this.src='/Hinh/HangHoa/default.jpg';">
+            </div>
+        </div>
+
+        <!-- Bên phải: Thông tin chi tiết -->
+        <div class="col-lg-7 h-auto mb-30">
+            <div class="h-100 bg-light p-30">
+                <h3 class="font-weight-semi-bold">@Model.TenHh</h3>
+                <p class="mb-4 text-muted small">Alias: @Model.TenAlias</p>
+
+                <!-- Thanh giá và khuyến mãi -->
+                <div class="row bg-secondary py-2 px-3 mb-4 rounded mx-0">
+                    <div class="col-6 border-right">
+                        <small class="text-uppercase text-muted d-block">Giá bán lẻ</small>
+                        <h3 class="font-weight-bold text-success mb-0">$@Model.DonGia</h3>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-uppercase text-muted d-block">Khuyến mãi</small>
+                        <h3 class="font-weight-bold text-danger mb-0">-@Model.GiamGia %</h3>
+                    </div>
+                </div>
+
+                <!-- Bảng thông số -->
+                <div class="mb-4">
+                    <div class="d-flex mb-2 border-bottom py-2">
+                        <div class="text-primary mr-3"><i class="fa fa-tag"></i> Danh mục:</div>
+                        <div class="ml-auto font-weight-bold">@(Model.MaLoaiNavigation?.TenLoai ?? "Chưa rõ")</div>
+                    </div>
+                    <div class="d-flex mb-2 border-bottom py-2">
+                        <div class="text-success mr-3"><i class="fa fa-building"></i> Nhà cung cấp:</div>
+                        <div class="ml-auto font-weight-bold">@(Model.MaNccNavigation?.TenCongTy ?? "Chưa rõ")</div>
+                    </div>
+                    <div class="d-flex mb-2 border-bottom py-2">
+                        <div class="text-warning mr-3"><i class="fa fa-box"></i> Đơn vị tính:</div>
+                        <div class="ml-auto font-weight-bold">@Model.MaLoai</div> @* Thay bằng DonViTinh nếu có *@
+                    </div>
+                    <div class="d-flex mb-2 border-bottom py-2">
+                        <div class="text-info mr-3"><i class="fa fa-eye"></i> Lượt xem:</div>
+                        <div class="ml-auto font-weight-bold text-info">@Model.SoLanXem</div>
+                    </div>
+                </div>
+
+                <!-- Mô tả ngắn -->
+                <p class="mb-4">@Model.MoTa</p>
+
+                <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-minus">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="number" id="txtSoLuong" class="form-control bg-secondary border-0 text-center" value="1" min="1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-plus">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button onclick="addToCart(@Model.MaHh)" class="btn btn-primary px-4 font-weight-bold">
+                        <i class="fa fa-shopping-cart mr-1"></i> THÊM VÀO GIỎ HÀNG
+                    </button>
+                </div>
+
+                @section Scripts {
+                    <script>
+                        function addToCart(maHh) {
+                            // 1. Lấy số lượng từ ô input
+                            var soLuong = document.getElementById("txtSoLuong").value;
+
+                            // 2. Chuyển trang kèm theo số lượng
+                            // Đường dẫn sẽ có dạng: /Cart/AddToCart?id=1001&quantity=2
+                            window.location.href = "/Cart/AddToCart?id=" + maHh + "&quantity=" + soLuong;
+                        }
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+</div>

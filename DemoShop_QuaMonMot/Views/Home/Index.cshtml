@@ -3,10 +3,16 @@
 @{
     int currentPage = ViewBag.CurrentPage ?? 1;
     int totalPage = ViewBag.TotalPage ?? 1;
+    ViewData["Title"] = "Trang chủ - Danh sách sản phẩm";
 }
 
-<!-- Shop Product Start -->
+
+@section Sidebar {
+    <partial name="_P_Sidebar" />
+}
+
 <div class="row pb-3">
+    @* Thanh công cụ phía trên: Sắp xếp và Chế độ xem *@
     <div class="col-12 pb-1">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
@@ -15,18 +21,18 @@
             </div>
             <div class="ml-2">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sắp xếp</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Latest</a>
-                        <a class="dropdown-item" href="#">Popularity</a>
-                        <a class="dropdown-item" href="#">Best Rating</a>
+                        <a class="dropdown-item" href="#">Mới nhất</a>
+                        <a class="dropdown-item" href="#">Phổ biến nhất</a>
+                        <a class="dropdown-item" href="#">Đánh giá cao</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @* Nút Thêm sản phẩm mới (Chỉ Admin thấy) *@
+    @* Nút Thêm sản phẩm mới (Chỉ hiển thị cho Admin) *@
     @if (Context.Session.GetInt32("VaiTro") == 1)
     {
         <div class="col-12 mb-4">
@@ -36,30 +42,36 @@
         </div>
     }
 
+    @* Danh sách sản phẩm *@
     @foreach (var item in Model)
     {
         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
             <div class="product-item bg-light mb-4">
                 <div class="product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-100" src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh">
+                    <img class="img-fluid w-100" src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh" onerror="this.src='/Hinh/HangHoa/default.jpg';">
                     <div class="product-action">
-                        <a class="btn btn-outline-dark btn-square" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh"><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                        <a class="btn btn-outline-dark btn-square" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                        <a class="btn btn-outline-dark btn-square" href="#"><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-sync-alt"></i></a>
+                        <a class="btn btn-outline-dark btn-square" asp-controller="HangHoa" asp-action="Detail" asp-route-id="@item.MaHh">
+                            <i class="fa fa-search"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="text-center py-4 px-2">
-                    <a class="h6 text-decoration-none text-truncate d-block" href="">@item.TenHh</a>
+                    <a class="h6 text-decoration-none text-truncate d-block" asp-controller="HangHoa" asp-action="Detail" asp-route-id="@item.MaHh">@item.TenHh</a>
                     <div class="d-flex align-items-center justify-content-center mt-2">
-                        <h5>$@item.DonGia</h5><h6 class="text-muted ml-2"><del>$@item.DonGia</del></h6>
+                        <h5>$@item.DonGia</h5>
+                        <h6 class="text-muted ml-2"><del>$@(item.DonGia * 1.1)</del></h6>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mb-1">
                         <small class="fa fa-eye text-primary mr-2"></small>
                         <small>@item.SoLanXem lượt xem</small>
                     </div>
 
-                    @* KHU VỰC QUẢN TRỊ: Sửa & Xóa *@
+                    @* Nút Quản trị (Sửa/Xóa) *@
                     @if (Context.Session.GetInt32("VaiTro") == 1)
                     {
                         <div class="d-flex align-items-center justify-content-center mt-3 pt-2 border-top">
@@ -79,20 +91,27 @@
         </div>
     }
 
+    @* Phân trang *@
     <div class="col-12">
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
-                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(currentPage - 1)">Previous</a>
+                    <a class="page-link" asp-controller="Home" asp-action="Index"
+                       asp-route-page="@(currentPage - 1)"
+                       asp-route-search="@Context.Request.Query["search"]">Trước</a>
                 </li>
                 @for (int i = 1; i <= totalPage; i++)
                 {
                     <li class="page-item @(currentPage == i ? "active" : "")">
-                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-controller="Home" asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-search="@Context.Request.Query["search"]">@i</a>
                     </li>
                 }
                 <li class="page-item @(currentPage >= totalPage ? "disabled" : "")">
-                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(currentPage + 1)">Next</a>
+                    <a class="page-link" asp-controller="Home" asp-action="Index"
+                       asp-route-page="@(currentPage + 1)"
+                       asp-route-search="@Context.Request.Query["search"]">Sau</a>
                 </li>
             </ul>
         </nav>

@@ -1,36 +1,33 @@
-﻿<!-- Price Start -->
-<h5 class="section-title position-relative text-uppercase mb-3">
+﻿<h5 class="section-title position-relative text-uppercase mb-3">
     <span class="bg-secondary pr-3">Filter by price</span>
 </h5>
 <div class="bg-light p-4 mb-30">
-    <form asp-action="Index" method="get" id="filterForm">
-        <div class="bg-light p-4 mb-30">
-            <!-- All Price -->
-            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-all"
-                       onclick="window.location.href='@Url.Action("Index", "Home")'"
-                       @(Context.Request.Query["priceRanges"].Count == 0 ? "checked" : "")>
-                <label class="custom-control-label" for="price-all">All Price</label>
-                <span class="badge border font-weight-normal">@ViewBag.AllCount</span>
-            </div>
+    <form asp-action="Index" asp-controller="Home" method="get" id="filterForm">
+        <input type="hidden" name="maLoai" value="@Context.Request.Query["maLoai"]" />
 
-            @foreach (var range in new Dictionary<string, int> {
-                        { "0-100", (int)(ViewBag.Count0_100 ?? 0) },
-                        { "100-200", (int)(ViewBag.Count100_200 ?? 0) },
-                        { "200-300", (int)(ViewBag.Count200_300 ?? 0) },
-                        { "300-400", (int)(ViewBag.Count300_400 ?? 0) },
-                        { "400-500", (int)(ViewBag.Count400_500 ?? 0) }
-                        })
-            {
-                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                    <input type="checkbox" name="priceRanges" value="@range.Key" class="custom-control-input"
-                           id="price-@range.Key" onchange="document.getElementById('filterForm').submit()"
-                           @(Context.Request.Query["priceRanges"].Any(v => v == range.Key) ? "checked" : "")>
-                    <label class="custom-control-label" for="price-@range.Key">$@range.Key.Replace("-", " - $")</label>
-                    <span class="badge border font-weight-normal">@range.Value</span>
-                </div>
-            }
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="checkbox" class="custom-control-input" id="price-all"
+                   onclick="window.location.href='@Url.Action("Index", "Home")'"
+                   @(Context.Request.Query["priceRanges"].Count == 0 ? "checked" : "")>
+            <label class="custom-control-label" for="price-all">All Price</label>
+            <span class="badge border font-weight-normal">@ViewBag.AllCount</span>
         </div>
+
+        @foreach (var range in new Dictionary<string, int> {
+                { "0-100", (int)(ViewBag.Count0_100 ?? 0) },
+                { "100-200", (int)(ViewBag.Count100_200 ?? 0) },
+                { "200-300", (int)(ViewBag.Count200_300 ?? 0) },
+                { "300-400", (int)(ViewBag.Count300_400 ?? 0) },
+                { "400-500", (int)(ViewBag.Count400_500 ?? 0) }
+                })
+        {
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input type="checkbox" name="priceRanges" value="@range.Key" class="custom-control-input"
+                       id="price-@range.Key" onchange="document.getElementById('filterForm').submit()"
+                       @(Context.Request.Query["priceRanges"].Any(v => v == range.Key) ? "checked" : "")>
+                <label class="custom-control-label" for="price-@range.Key">$@range.Key.Replace("-", " - $")</label>
+                <span class="badge border font-weight-normal">@range.Value</span>
+            </div>
+        }
     </form>
 </div>
-<!-- Price End -->

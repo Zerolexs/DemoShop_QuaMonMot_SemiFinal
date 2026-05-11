@@ -98,6 +98,23 @@ namespace DemoShop_QuaMonMot.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> Detail(int id)
+        {
+            // Lấy thông tin hàng hóa kèm theo Loại và Nhà cung cấp
+            var hangHoa = await _context.HangHoas
+                .Include(h => h.MaLoaiNavigation)
+                .Include(h => h.MaNccNavigation)
+                .FirstOrDefaultAsync(h => h.MaHh == id);
+
+            if (hangHoa == null) return NotFound();
+
+            // Tăng số lượt xem
+            hangHoa.SoLanXem += 1;
+            _context.Update(hangHoa);
+            await _context.SaveChangesAsync();
+
+            return View(hangHoa);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
