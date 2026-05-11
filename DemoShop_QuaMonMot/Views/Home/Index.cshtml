@@ -10,21 +10,23 @@
     <partial name="_P_Sidebar" />
 }
 
-<div class="row pb-3">
+<div id="product-list" class="row pb-3">
     @* --- THANH CÔNG CỤ --- *@
     <div class="col-12 pb-1">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
-                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+                @* Nút Grid *@
+                <button class="btn btn-sm btn-light" onclick="changeView('grid')"><i class="fa fa-th-large"></i></button>
+                @* Nút List *@
+                <button class="btn btn-sm btn-light ml-2" onclick="changeView('list')"><i class="fa fa-bars"></i></button>
             </div>
             <div class="ml-2">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sắp xếp</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Mới nhất</a>
-                        <a class="dropdown-item" href="#">Phổ biến nhất</a>
-                        <a class="dropdown-item" href="#">Đánh giá cao</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "latest", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Mới nhất</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_asc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Giá tăng dần</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_desc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Giá giảm dần</a>
                     </div>
                 </div>
             </div>
@@ -124,3 +126,22 @@
         </nav>
     </div>
 </div>
+<script>
+    function changeView(mode) {
+        const list = document.getElementById('product-list');
+        const items = document.querySelectorAll('.item-container');
+
+        if (mode === 'list') {
+            list.classList.remove('row'); // Tùy template, thường là đổi sang dọc
+            items.forEach(item => {
+                item.className = 'col-12 mb-3'; // Chiếm toàn bộ chiều ngang
+                // Bạn có thể thêm code để đổi style hiển thị nằm ngang ở đây
+            });
+        } else {
+            list.classList.add('row');
+            items.forEach(item => {
+                item.className = 'col-lg-4 col-md-6 col-sm-6'; // Quay lại 3 cột
+            });
+        }
+    }
+</script>

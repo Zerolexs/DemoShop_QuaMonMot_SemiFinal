@@ -17,7 +17,7 @@ namespace DemoShop_QuaMonMot.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string? search, int page = 1, int record = 9, string[] priceRanges = null, int? maLoai = null)
+        public async Task<IActionResult> Index(string sort, string? search, int page = 1, int record = 9, string[] priceRanges = null, int? maLoai = null)
         {
             var query = _context.HangHoas.AsQueryable();
 
@@ -83,6 +83,15 @@ namespace DemoShop_QuaMonMot.Controllers
                 var finalIds = allMatchedIds.Distinct().ToList();
                 query = query.Where(h => finalIds.Contains(h.MaHh));
             }
+            switch (sort)
+            {
+                case "price_asc": query = query.OrderBy(p => p.DonGia); break;
+                case "price_desc": query = query.OrderByDescending(p => p.DonGia); break;
+                case "latest": query = query.OrderByDescending(p => p.MaHh); break;
+                default: query = query.OrderBy(p => p.TenHh); break;
+            }
+
+            ViewBag.CurrentSort = sort; // Lưu lại để giữ trạng thái dropdown
 
             // --- 5. Phân trang và trả về View ---
             int totalRecord = await query.CountAsync();
