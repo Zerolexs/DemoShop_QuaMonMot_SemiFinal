@@ -63,7 +63,8 @@ namespace DemoShop_QuaMonMot.Controllers
                         MaKh = maKh,
                         MaHh = id,
                         SoLuong = quantity,
-                        NgayChon = DateTime.Now
+                        NgayChon = DateTime.Now,
+                        SessionId = HttpContext.Session.Id
                     });
                 }
                 else

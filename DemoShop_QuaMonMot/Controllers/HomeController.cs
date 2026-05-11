@@ -93,10 +93,20 @@ namespace DemoShop_QuaMonMot.Controllers
 
             ViewBag.CurrentSort = sort; // Lưu lại để giữ trạng thái dropdown
 
+           
+
             // --- 5. Phân trang và trả về View ---
             int totalRecord = await query.CountAsync();
             ViewBag.TotalPage = (int)Math.Ceiling((double)totalRecord / record);
             ViewBag.CurrentPage = page;
+
+            var maKh = HttpContext.Session.GetString("MaKh");
+            if (!string.IsNullOrEmpty(maKh))
+            {
+                ViewBag.FavoriteIds = _context.YeuThiches
+                    .Where(y => y.MaKh == maKh)
+                    .Select(y => y.MaHh).ToList();
+            }
 
             var data = await query
                 .Include(h => h.MaLoaiNavigation)

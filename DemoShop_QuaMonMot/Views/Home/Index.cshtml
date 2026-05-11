@@ -4,6 +4,7 @@
     int currentPage = ViewBag.CurrentPage ?? 1;
     int totalPage = ViewBag.TotalPage ?? 1;
     ViewData["Title"] = "Trang chủ - Danh sách sản phẩm";
+
 }
 
 @section Sidebar {
@@ -46,6 +47,11 @@
     @* --- DANH SÁCH SẢN PHẨM --- *@
     @foreach (var item in Model)
     {
+        
+        var favIds = ViewBag.FavoriteIds as List<int> ?? new List<int>();
+        bool isLiked = favIds.Contains(item.MaHh);
+        
+
         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
             <div class="product-item bg-light mb-4">
                 <div class="product-img position-relative overflow-hidden">
@@ -57,7 +63,12 @@
                         <a class="btn btn-outline-dark btn-square" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh">
                             <i class="fa fa-shopping-cart"></i>
                         </a>
-                        <a class="btn btn-outline-dark btn-square" href="#"><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square btn-add-wishlist"
+                           asp-controller="YeuThich"
+                           asp-action="Add"
+                           asp-route-id="@item.MaHh">
+                            <i class="@(isLiked ? "fas text-danger" : "far") fa-heart"></i>
+                        </a>
                         <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-sync-alt"></i></a>
                         <a class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaHh">
                             <i class="fa fa-search"></i>
@@ -145,3 +156,41 @@
         }
     }
 </script>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-add-wishlist").click(function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                var url = btn.attr("href");
+                var icon = btn.find("i");
+
+                $.post(url, function (res) {
+                    if (res.success) {
+                        // Sửa selector này cho chính xác với Layout của bạn
+                        // Thường là thẻ span kế bên icon heart trong Header
+                        var badges = $("[id='wishlist-count-badge']");
+                            // Lấy số hiện tại từ cái đầu tiên tìm thấy
+                        var currentCount = parseInt($(badges[0]).text()) || 0;
+
+                        if (res.action === "added") {
+                            icon.removeClass("far").addClass("fas text-danger");
+                            badges.text(currentCount + 1); // Cập nhật tất cả các badge
+                            alert("Đã thêm vào yêu thích!");
+                        } else {
+                            icon.removeClass("fas text-danger").addClass("far");
+                            badges.text(Math.max(0, currentCount - 1));
+                            alert("Đã bỏ khỏi yêu thích!");
+                        }
+                    } else {
+                        alert(res.message);
+                        window.location.href = "/KhachHang/DangNhap";
+                    }
+                }).fail(function() {
+                    alert("Lỗi kết nối máy chủ!");
+                });
+            });
+        });
+    </script>
+}
