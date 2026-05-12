@@ -22,9 +22,9 @@ namespace DemoShop_QuaMonMot.Controllers
             var query = _context.HangHoas.AsQueryable();
 
             // --- 1. Lấy danh sách Danh mục và đổi tên sang Tiếng Anh ---
-            var danhMucGốc = await _context.Loais.Include(l => l.HangHoas).ToListAsync();
+            var danhmucgoc = await _context.Loais.Include(l => l.HangHoas).ToListAsync();
 
-            var danhMuc = danhMucGốc.Select(l => new
+            var danhMuc = danhmucgoc.Select(l => new
             {
                 MaLoai = l.MaLoai,
                 // Map tên từ DB sang Tiếng Anh
@@ -91,7 +91,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 default: query = query.OrderBy(p => p.TenHh); break;
             }
 
-            ViewBag.CurrentSort = sort; // Lưu lại để giữ trạng thái dropdown
+            ViewBag.CurrentSort = sort; 
 
            
 
