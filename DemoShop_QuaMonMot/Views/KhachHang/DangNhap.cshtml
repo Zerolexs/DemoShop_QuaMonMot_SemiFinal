@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Đăng Nhập Hệ Thống";
+    var loginRequiredMessage = TempData["LoginRequiredMessage"] as string;
 }
 
 <div class="container-fluid">
@@ -22,6 +23,14 @@
                 <span class="bg-secondary pr-3">Đăng Nhập</span>
             </h5>
             <div class="bg-light p-30 mb-5">
+                @if (!string.IsNullOrEmpty(loginRequiredMessage))
+                {
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        @loginRequiredMessage
+                    </div>
+                }
+
                 @* Lưu ý: asp-route-returnurl giúp giữ địa chỉ trang trước đó *@
                 <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl" method="post">
 
@@ -78,5 +87,11 @@
     @* Script này giúp kiểm tra lỗi ngay tại trình duyệt mà không cần load lại trang *@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @if (!string.IsNullOrEmpty(loginRequiredMessage))
+    {
+        <script>
+            alert(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(loginRequiredMessage)));
+        </script>
     }
 }

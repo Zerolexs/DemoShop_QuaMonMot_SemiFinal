@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+    var orderId = TempData["OrderId"];
+    var orderTotal = TempData["OrderTotal"];
+}
+
+<div class="container-fluid py-5">
+    <div class="container text-center">
+        <div class="bg-light p-5">
+            <div class="mb-4">
+                <i class="fa fa-check-circle text-success" style="font-size: 72px;"></i>
+            </div>
+
+            <h2 class="text-uppercase mb-3">Đặt hàng COD thành công!</h2>
+
+            <p class="mb-4">
+                Quý khách đã đặt hàng thành công. Đơn hàng của bạn đã được ghi nhận và sẽ được xử lý sớm.
+            </p>
+
+            @if (orderId != null)
+            {
+                <p class="mb-1"><strong>Mã đơn hàng:</strong> #@orderId</p>
+            }
+
+            @if (orderTotal != null)
+            {
+                <p class="mb-4"><strong>Tổng thanh toán:</strong> $@orderTotal</p>
+            }
+
+            <div class="d-flex justify-content-center">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary px-4 mr-2">
+                    Tiếp tục mua hàng
+                </a>
+
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-primary px-4">
+                    Xem giỏ hàng
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        alert("Quý khách đã đặt hàng thành công");
+    </script>
+}

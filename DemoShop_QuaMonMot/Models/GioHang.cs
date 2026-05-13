@@ -9,7 +9,7 @@ public partial class GioHang
 
     public string SessionId { get; set; } = null!;
 
-    public string? MaKh { get; set; } = null!;
+    public string? MaKh { get; set; }
 
     public int MaHh { get; set; }
 
@@ -19,5 +19,5 @@ public partial class GioHang
 
     public virtual HangHoa MaHhNavigation { get; set; } = null!;
 
-    public virtual KhachHang MaKhNavigation { get; set; } = null!;
+    public virtual KhachHang? MaKhNavigation { get; set; }
 }

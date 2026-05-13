@@ -83,9 +83,14 @@
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5>$@Model.Sum(s => s.ThanhTien)</h5>
+                        <h5>$@(Model.Sum(s => s.ThanhTien) + 10)</h5>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                    <a asp-action="ThanhToan"
+                       asp-controller="Cart"
+                       class="btn btn-block btn-primary font-weight-bold my-3 py-3">
+                        Thanh Toán
+                    </a>
+
                 </div>
             </div>
         </div>

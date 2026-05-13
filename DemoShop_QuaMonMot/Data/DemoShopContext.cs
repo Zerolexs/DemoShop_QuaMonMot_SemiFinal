@@ -150,6 +150,7 @@ public partial class DemoShopContext : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.GioHangs)
                 .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_GioHang_KhachHang");
         });
 
@@ -222,6 +223,7 @@ public partial class DemoShopContext : DbContext
                 .HasMaxLength(50)
                 .HasDefaultValue("Airline");
             entity.Property(e => e.DiaChi).HasMaxLength(60);
+            entity.Property(e => e.DienThoai).HasMaxLength(50);
             entity.Property(e => e.GhiChu).HasMaxLength(50);
             entity.Property(e => e.HoTen).HasMaxLength(50);
             entity.Property(e => e.MaKh)
