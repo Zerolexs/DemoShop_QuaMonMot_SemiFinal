@@ -61,14 +61,12 @@
             <div class="d-inline-flex align-items-center d-block d-lg-none">
                 <a asp-controller="YeuThich" asp-action="Index" class="btn px-0">
                     <i class="fas fa-heart text-primary"></i>
-                    @* Thêm id="wishlist-count-badge" vào đây *@
                     <span id="wishlist-count-badge" class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">
                         @await Component.InvokeAsync("WishlistCount")
                     </span>
                 </a>
                 <a asp-controller="Cart" asp-action="Index" class="btn px-0 ml-3">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    @* Sửa số 0 thành lệnh gọi Component *@
                     @await Component.InvokeAsync("CartSummary")
                 </a>
             </div>
@@ -141,15 +139,14 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-@*                          <a href="~/index.html" class="nav-item nav-link">Home</a>
- *@                        <a asp-controller="Home" asp-action="index" class="nav-item nav-link">Cửa Hàng</a>
-@*                         <a href="checkout.html" class="nav-item nav-link">Checkout</a>
- *@                        @* <a asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">Privacy</a> *@
-@*                        <a href="contact.html" class="nav-item nav-link">Contact</a>
- *@                       <a asp-controller="Cart" asp-action="Index" class="nav-item nav-link">Giỏ Hàng</a>
-@*                           <a asp-controller="KhachHang" asp-action="DangNhap" class="nav-item nav-link">Đăng Nhập</a>
- *@                    
-                           <a asp-controller="YeuThich" asp-action="Index" class="nav-item nav-link">Yêu Thích</a>
+                          <a href="~/index.html" class="nav-item nav-link">Home</a>
+                         <a asp-controller="Home" asp-action="index" class="nav-item nav-link">Cửa Hàng</a>
+                         @* <a href="checkout.html" class="nav-item nav-link">Checkout</a> *@
+                          <a asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">Privacy</a> 
+                        @* <a href="contact.html" class="nav-item nav-link">Contact</a> *@
+                        <a asp-controller="Cart" asp-action="Index" class="nav-item nav-link">Giỏ Hàng</a>
+                           @* <a asp-controller="KhachHang" asp-action="DangNhap" class="nav-item nav-link">Đăng Nhập</a> *@
+                            @* <a asp-controller="YeuThich" asp-action="Index" class="nav-item nav-link">Yêu Thích</a> *@
                 </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a asp-controller="YeuThich" asp-action="Index" class="btn px-0">

@@ -1,6 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Chính sách bảo mật & Đội ngũ";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+            <h2 class="text-primary font-weight-bold">Chính sách bảo mật</h2>
+            <hr class="w-25 mx-auto">
+        </div>
+        <div class="row px-xl-5">
+            <div class="col-lg-12 mb-5">
+                <div class="bg-light p-4 rounded shadow-sm">
+                    <p class="lead">Hệ thống của chúng tôi cam kết bảo vệ quyền riêng tư và dữ liệu của bạn dựa trên các nguyên tắc:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fa fa-shield-alt text-primary mr-3"></i><strong>An toàn dữ liệu:</strong> Mọi thông tin tài khoản được mã hóa và lưu trữ an toàn trong SQL Server.</li>
+                        <li class="mb-3"><i class="fa fa-user-lock text-primary mr-3"></i><strong>Quyền riêng tư:</strong> Chúng tôi không chia sẻ thông tin cá nhân của bạn cho bên thứ ba.</li>
+                        <li class="mb-3"><i class="fa fa-database text-primary mr-3"></i><strong>Minh bạch:</strong> Bạn có quyền yêu cầu xem, chỉnh sửa hoặc xóa thông tin cá nhân bất kỳ lúc nào.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+            <h2 class="text-primary font-weight-bold">Đội ngũ phát triển</h2>
+            <hr class="w-25 mx-auto">
+        </div>
+
+        <div class="row px-xl-5">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-item bg-light text-center p-4 shadow-sm rounded">
+                    <div class="position-relative overflow-hidden mb-4" style="border-radius: 50%; width: 180px; height: 180px; margin: 0 auto; border: 5px solid #fff;">
+                        <img class="img-fluid w-100 h-100" src="~/Hinh/Team/bao.jpg" alt="Lưu Tiến Bảo"
+                             style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
+                    </div>
+                    <h5 class="font-weight-bold">Lưu Tiến Bảo</h5>
+                    <p class="text-primary text-uppercase small mb-2">Trưởng nhóm / Backend</p>
+                    <p class="px-2 text-muted">Phụ trách N-Tier Architecture, ADO.NET và quản lý cơ sở dữ liệu hệ thống.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-item bg-light text-center p-4 shadow-sm rounded">
+                    <div class="position-relative overflow-hidden mb-4" style="border-radius: 50%; width: 180px; height: 180px; margin: 0 auto; border: 5px solid #fff;">
+                        <img class="img-fluid w-100 h-100" src="~/Hinh/Team/member2.jpg" alt="Member 2"
+                             style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
+                    </div>
+                    <h5 class="font-weight-bold">[Họ tên TV 2]</h5>
+                    <p class="text-primary text-uppercase small mb-2">Developer / Fullstack</p>
+                    <p class="px-2 text-muted">Phát triển các Controller nghiệp vụ và tích hợp giao diện người dùng.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-item bg-light text-center p-4 shadow-sm rounded">
+                    <div class="position-relative overflow-hidden mb-4" style="border-radius: 50%; width: 180px; height: 180px; margin: 0 auto; border: 5px solid #fff;">
+                        <img class="img-fluid w-100 h-100" src="~/Hinh/Team/member3.jpg" alt="Member 3"
+                             style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
+                    </div>
+                    <h5 class="font-weight-bold">[Họ tên TV 3]</h5>
+                    <p class="text-primary text-uppercase small mb-2">UI-UX Designer</p>
+                    <p class="px-2 text-muted">Thiết kế Layout, tối ưu CSS và đảm bảo tính tương thích của Website.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .team-item {
+        transition: .3s;
+    }
+
+        .team-item:hover {
+            background: #ffffff !important;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        .team-item img {
+            transition: .3s;
+        }
+</style>
