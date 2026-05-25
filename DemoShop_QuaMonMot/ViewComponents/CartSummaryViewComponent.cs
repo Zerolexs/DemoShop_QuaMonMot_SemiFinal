@@ -13,7 +13,7 @@ namespace DemoShop_QuaMonMot.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            string maKh = HttpContext.Session.GetString("MaKh");
+            string? maKh = HttpContext.Session.GetString("MaKh");
             int totalQuantity = 0;
 
             if (!string.IsNullOrEmpty(maKh))

@@ -1,46 +1,52 @@
-﻿    <!-- Topbar Start -->
+@using System.Globalization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpperInvariant();
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    if (string.IsNullOrWhiteSpace(returnUrl))
+    {
+        returnUrl = Url.Action("TrangChu", "Home") ?? "/";
+    }
+}
+
 <div class="container-fluid">
     <div class="row bg-secondary py-1 px-xl-5">
         <div class="col-lg-6 d-none d-lg-block">
             <div class="d-inline-flex align-items-center h-100">
-                <a class="text-body mr-3" href="">About</a>
-                <a class="text-body mr-3" href="">Contact</a>
-                <a class="text-body mr-3" href="">Help</a>
-                <a class="text-body mr-3" href="">FAQs</a>
+                <a class="text-body mr-3" href="">@Localizer["About"]</a>
+                <a class="text-body mr-3" href="">@Localizer["Contact"]</a>
+                <a class="text-body mr-3" href="">@Localizer["Help"]</a>
+                <a class="text-body mr-3" href="">@Localizer["Faqs"]</a>
             </div>
         </div>
+
         <div class="col-lg-6 text-center text-lg-right">
             <div class="d-inline-flex align-items-center">
-                @using Microsoft.AspNetCore.Http
-
-                <div class="d-inline-flex align-items-center">
-                    @if (Context.Session.GetString("MaKh") != null)
-                    {
-                        @* TRƯỜNG HỢP: Đã đăng nhập - Hiển thị Dropdown tên người dùng *@
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user mr-1"></i>
-                                @(Context.Session.GetString("HoTen") ?? "Tài Khoản")
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" asp-controller="KhachHang" asp-action="Profile">Hồ sơ của tôi</a>
-                                <a class="dropdown-item" href="#">Đơn hàng đã mua</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" asp-controller="KhachHang" asp-action="DangXuat">
-                                    <i class="fa fa-sign-out-alt mr-2"></i>Đăng xuất
-                                </a>
-                            </div>
+                @if (Context.Session.GetString("MaKh") != null)
+                {
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user mr-1"></i>
+                            @(Context.Session.GetString("HoTen") ?? Localizer["Account"].Value)
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" asp-controller="KhachHang" asp-action="Profile">@Localizer["MyProfile"]</a>
+                            <a class="dropdown-item" href="#">@Localizer["MyOrders"]</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" asp-controller="KhachHang" asp-action="DangXuat">
+                                <i class="fa fa-sign-out-alt mr-2"></i>@Localizer["Logout"]
+                            </a>
                         </div>
-                    }
-                    else
-                    {
-                        @* TRƯỜNG HỢP: Chưa đăng nhập - Hiển thị trực tiếp nút Đăng nhập *@
-                        <a class="btn btn-sm btn-light font-weight-bold" asp-controller="KhachHang" asp-action="DangNhap">
-                            <i class="fa fa-sign-in-alt mr-1"></i> Đăng nhập
-                        </a>
-                    }
-                </div>
-                </div>
+                    </div>
+                }
+                else
+                {
+                    <a class="btn btn-sm btn-light font-weight-bold" asp-controller="KhachHang" asp-action="DangNhap">
+                        <i class="fa fa-sign-in-alt mr-1"></i> @Localizer["Login"]
+                    </a>
+                }
+
                 <div class="btn-group mx-2">
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -49,15 +55,24 @@
                         <button class="dropdown-item" type="button">CAD</button>
                     </div>
                 </div>
+
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">@currentCulture</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">FR</button>
-                        <button class="dropdown-item" type="button">AR</button>
-                        <button class="dropdown-item" type="button">RU</button>
+                        <form asp-controller="Home" asp-action="SetLanguage" method="post">
+                            <input type="hidden" name="culture" value="vi" />
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />
+                            <button class="dropdown-item" type="submit">@Localizer["Vietnamese"]</button>
+                        </form>
+                        <form asp-controller="Home" asp-action="SetLanguage" method="post">
+                            <input type="hidden" name="culture" value="en" />
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />
+                            <button class="dropdown-item" type="submit">@Localizer["English"]</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="d-inline-flex align-items-center d-block d-lg-none">
                 <a asp-controller="YeuThich" asp-action="Index" class="btn px-0">
                     <i class="fas fa-heart text-primary"></i>
@@ -72,19 +87,19 @@
             </div>
         </div>
     </div>
+
     <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
         <div class="col-lg-4">
-            <a  asp-controller="Home" asp-action="Index" class="text-decoration-none">
+            <a asp-controller="Home" asp-action="TrangChu" class="text-decoration-none">
                 <span class="h1 text-uppercase text-primary bg-dark px-2">QuaMon</span>
                 <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Mot</span>
-
             </a>
         </div>
         <div class="col-lg-4 col-6 text-left">
             <form asp-controller="Home" asp-action="Index" method="get">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control"
-                           placeholder="Tìm kiếm sản phẩm..." value="@Context.Request.Query["search"]">
+                           placeholder="@Localizer["SearchPlaceholder"]" value="@Context.Request.Query["search"]">
                     <div class="input-group-append">
                         <button type="submit" class="input-group-text bg-transparent text-primary">
                             <i class="fa fa-search"></i>
@@ -94,19 +109,17 @@
             </form>
         </div>
         <div class="col-lg-4 col-6 text-right">
-            <p class="m-0">Customer Service</p>
+            <p class="m-0">@Localizer["CustomerService"]</p>
             <h5 class="m-0">+012 345 6789</h5>
         </div>
     </div>
 </div>
-<!-- Topbar End -->
 
-<!-- Navbar Start -->
 <div class="container-fluid bg-dark mb-30">
     <div class="row px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
-                <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
+                <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>@Localizer["Categories"]</h6>
                 <i class="fa fa-angle-down text-dark"></i>
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
@@ -123,14 +136,15 @@
                     }
                     else
                     {
-                        <a href="" class="nav-item nav-link">Đang tải danh mục...</a>
+                        <a href="" class="nav-item nav-link">@Localizer["LoadingCategories"]</a>
                     }
                 </div>
             </nav>
         </div>
+
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                <a asp-controller="Home" asp-action="Index" class="text-decoration-none d-block d-lg-none">
+                <a asp-controller="Home" asp-action="TrangChu" class="text-decoration-none d-block d-lg-none">
                     <span class="h1 text-uppercase text-dark bg-light px-2">QuaMon</span>
                     <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Mot</span>
                 </a>
@@ -139,26 +153,20 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                          <a href="~/index.html" class="nav-item nav-link">Home</a>
-                         <a asp-controller="Home" asp-action="index" class="nav-item nav-link">Cửa Hàng</a>
-                         @* <a href="checkout.html" class="nav-item nav-link">Checkout</a> *@
-                          <a asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">Privacy</a> 
-                        @* <a href="contact.html" class="nav-item nav-link">Contact</a> *@
-                        <a asp-controller="Cart" asp-action="Index" class="nav-item nav-link">Giỏ Hàng</a>
-                           @* <a asp-controller="KhachHang" asp-action="DangNhap" class="nav-item nav-link">Đăng Nhập</a> *@
-                            @* <a asp-controller="YeuThich" asp-action="Index" class="nav-item nav-link">Yêu Thích</a> *@
-                </div>
+                        <a asp-controller="Home" asp-action="TrangChu" class="nav-item nav-link">@Localizer["Home"]</a>
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">@Localizer["Shop"]</a>
+                        <a asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">@Localizer["Policy"]</a>
+                        <a asp-controller="Cart" asp-action="Index" class="nav-item nav-link">@Localizer["Cart"]</a>
+                    </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a asp-controller="YeuThich" asp-action="Index" class="btn px-0">
                             <i class="fas fa-heart text-primary"></i>
-                            @* Thêm id="wishlist-count-badge" vào đây *@
                             <span id="wishlist-count-badge" class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">
                                 @await Component.InvokeAsync("WishlistCount")
                             </span>
                         </a>
                         <a asp-controller="Cart" asp-action="Index" class="btn px-0 ml-3">
                             <i class="fas fa-shopping-cart text-primary"></i>
-                            @* Sửa số 0 thành lệnh gọi Component *@
                             @await Component.InvokeAsync("CartSummary")
                         </a>
                     </div>
@@ -167,4 +175,3 @@
         </div>
     </div>
 </div>
-<!-- Navbar End xxx -->

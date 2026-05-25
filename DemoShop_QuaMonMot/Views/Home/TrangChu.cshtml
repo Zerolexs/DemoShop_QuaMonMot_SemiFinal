@@ -1,0 +1,112 @@
+@model IEnumerable<DemoShop_QuaMonMot.Models.HangHoa>
+@{
+    ViewData["Title"] = T["HomeTitle"];
+    var products = Model.ToList();
+    var heroProducts = products.Take(3).ToList();
+    var featuredProducts = products.Take(8).ToList();
+    var recentProducts = products.Skip(8).Take(8).ToList();
+    var categoryItems = ViewBag.DanhMuc as IEnumerable<dynamic>;
+    var fallbackImage = Url.Content("~/Hinh/HangHoa/1009.gif");
+}
+
+@functions {
+    string ProductImage(HangHoa product, string fallbackImage)
+    {
+        return Url.Content("~/Hinh/HangHoa/" + (string.IsNullOrWhiteSpace(product.Hinh) ? "1009.gif" : product.Hinh));
+    }
+}
+
+<div class="container-fluid mb-3">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @for (var i = 0; i < heroProducts.Count; i++)
+                    {
+                        <li data-target="#header-carousel" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                    }
+                </ol>
+                <div class="carousel-inner">
+                    @for (var i = 0; i < heroProducts.Count; i++)
+                    {
+                        var item = heroProducts[i];
+                        <div class="carousel-item position-relative @(i == 0 ? "active" : "")" style="height: 430px;">
+                            <img class="position-absolute w-100 h-100" src="@ProductImage(item, fallbackImage)" alt="@item.TenHh" style="object-fit: cover;">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">@item.TenHh</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">@T["ExploreFeatured"]</p>
+                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaHh">@T["ViewDetails"]</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            @foreach (var item in products.Skip(3).Take(2))
+            {
+                <div class="product-offer mb-30" style="height: 200px;">
+                    <img class="img-fluid" src="@ProductImage(item, fallbackImage)" alt="@item.TenHh">
+                    <div class="offer-text">
+                        <h6 class="text-white text-uppercase">@T["FeaturedProduct"]</h6>
+                        <h3 class="text-white mb-3">@item.TenHh</h3>
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaHh" class="btn btn-primary">@T["ShopNow"]</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">@T["ProductCategories"]</span>
+    </h2>
+    <div class="row px-xl-5 pb-3">
+        @if (categoryItems != null)
+        {
+            foreach (var category in categoryItems)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <a class="text-decoration-none" asp-controller="Home" asp-action="Index" asp-route-maLoai="@category.MaLoai">
+                        <div class="cat-item d-flex align-items-center mb-4">
+                            <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                                <img class="img-fluid" src="@fallbackImage" alt="@category.TenLoai">
+                            </div>
+                            <div class="flex-fill pl-3">
+                                <h6>@category.TenLoai</h6>
+                                <small class="text-body">@category.SoLuong @T["ProductsUnit"]</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">@T["FeaturedProducts"]</span>
+    </h2>
+    <div class="row px-xl-5">
+        @foreach (var item in featuredProducts)
+        {
+            <partial name="_ProductCard" model="item" />
+        }
+    </div>
+</div>
+
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">@T["LatestProducts"]</span>
+    </h2>
+    <div class="row px-xl-5">
+        @foreach (var item in recentProducts)
+        {
+            <partial name="_ProductCard" model="item" />
+        }
+    </div>
+</div>

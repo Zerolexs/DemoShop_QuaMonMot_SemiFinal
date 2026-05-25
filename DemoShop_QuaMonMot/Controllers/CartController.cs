@@ -13,6 +13,7 @@ namespace DemoShop_QuaMonMot.Controllers
     {
         private readonly DemoShopContext _context;
         private const string CART_KEY = "MYCART"; 
+        private const string COUPON_KEY = "COUPON_CODE";
 
         public CartController(DemoShopContext context)
         {
@@ -20,6 +21,53 @@ namespace DemoShop_QuaMonMot.Controllers
         }
 
         public List<CartItem> SessionCart => HttpContext.Session.Get<List<CartItem>>(CART_KEY) ?? new List<CartItem>();
+
+        private static readonly Dictionary<string, (string Name, double Percent, bool FreeShipping)> Coupons = new()
+        {
+            ["QMM10"] = ("Giảm 10% giá trị sản phẩm", 10, false),
+            ["QMM20"] = ("Giảm 20% giá trị sản phẩm", 20, false),
+            ["FREESHIP"] = ("Miễn phí vận chuyển", 0, true),
+            ["LONGDEPTRAI"] = ("Giảm 100% giá trị sản phẩm", 100, false),
+            ["BAODEPTRAI"] = ("Giảm 100% giá trị sản phẩm", 100, false),
+            ["THANGDEPTRAI"] = ("Giảm 100% giá trị sản phẩm", 100, false)
+        };
+
+        private string? CurrentCouponCode => HttpContext.Session.GetString(COUPON_KEY);
+
+        private (string? Code, string? Name, double Discount, double ShippingFee, double Total, double Percent) GetOrderTotals(IEnumerable<CartItem> cart)
+        {
+            var subtotal = cart.Sum(item => item.ThanhTien);
+            var shippingFee = subtotal > 0 ? 10.0 : 0.0;
+            var discount = 0.0;
+            var percent = 0.0;
+            string? couponName = null;
+            var couponCode = CurrentCouponCode;
+
+            if (!string.IsNullOrEmpty(couponCode) && Coupons.TryGetValue(couponCode, out var coupon))
+            {
+                couponName = coupon.Name;
+                percent = coupon.Percent;
+                discount = Math.Round(subtotal * coupon.Percent / 100, 2);
+
+                if (coupon.FreeShipping)
+                {
+                    shippingFee = 0;
+                }
+            }
+
+            var total = Math.Max(0, subtotal - discount + shippingFee);
+            return (couponCode, couponName, discount, shippingFee, total, percent);
+        }
+
+        private void SetCouponViewBag(IEnumerable<CartItem> cart)
+        {
+            var totals = GetOrderTotals(cart);
+            ViewBag.CouponCode = totals.Code;
+            ViewBag.CouponName = totals.Name;
+            ViewBag.CouponDiscount = totals.Discount;
+            ViewBag.ShippingFee = totals.ShippingFee;
+            ViewBag.OrderTotal = totals.Total;
+        }
 
         private void MergeSessionCartToDatabase(string maKh)
         {
@@ -52,6 +100,7 @@ namespace DemoShop_QuaMonMot.Controllers
 
             _context.SaveChanges();
             HttpContext.Session.Set(CART_KEY, new List<CartItem>());
+            HttpContext.Session.Remove(COUPON_KEY);
         }
 
         private List<CartItem> GetCheckoutCart()
@@ -71,7 +120,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 {
                     MaHh = gh.MaHh,
                     tenHH = gh.MaHhNavigation.TenHh,
-                    Hinh = gh.MaHhNavigation.Hinh,
+                    Hinh = gh.MaHhNavigation.Hinh ?? string.Empty,
                     DonGia = gh.MaHhNavigation.DonGia ?? 0,
                     Soluong = gh.SoLuong
                 })
@@ -112,7 +161,7 @@ namespace DemoShop_QuaMonMot.Controllers
         // --- 1. HIỂN THỊ GIỎ HÀNG ---
         public IActionResult Index()
         {
-            string maKh = HttpContext.Session.GetString("MaKh");
+            string? maKh = HttpContext.Session.GetString("MaKh");
 
             if (!string.IsNullOrEmpty(maKh))
             {
@@ -126,21 +175,54 @@ namespace DemoShop_QuaMonMot.Controllers
                     {
                         MaHh = gh.MaHh,
                         tenHH = gh.MaHhNavigation.TenHh,
-                        Hinh = gh.MaHhNavigation.Hinh,
+                        Hinh = gh.MaHhNavigation.Hinh ?? string.Empty,
                         DonGia = gh.MaHhNavigation.DonGia ?? 0,
                         Soluong = gh.SoLuong // Đã khớp tên biến Soluong
                     }).ToList();
+                SetCouponViewBag(data);
                 return View(data);
             }
 
             // KHÁCH: Lấy từ Session
-            return View(SessionCart);
+            var sessionCart = SessionCart;
+            SetCouponViewBag(sessionCart);
+            return View(sessionCart);
+        }
+
+        [HttpPost]
+        public IActionResult ApplyCoupon(string couponCode)
+        {
+            if (string.IsNullOrWhiteSpace(couponCode))
+            {
+                TempData["CouponError"] = "Vui lòng nhập mã giảm giá.";
+                return RedirectToAction("Index");
+            }
+
+            var normalizedCode = couponCode.Trim().ToUpperInvariant();
+            if (!Coupons.ContainsKey(normalizedCode))
+            {
+                TempData["CouponError"] = "Mã giảm giá không hợp lệ.";
+                HttpContext.Session.Remove(COUPON_KEY);
+                return RedirectToAction("Index");
+            }
+
+            HttpContext.Session.SetString(COUPON_KEY, normalizedCode);
+            TempData["CouponMessage"] = $"Đã áp dụng mã {normalizedCode}.";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveCoupon()
+        {
+            HttpContext.Session.Remove(COUPON_KEY);
+            TempData["CouponMessage"] = "Đã bỏ mã giảm giá.";
+            return RedirectToAction("Index");
         }
 
         // --- 2. THÊM VÀO GIỎ HÀNG ---
         public IActionResult AddToCart(int id, int quantity = 1)
         {
-            string maKh = HttpContext.Session.GetString("MaKh");
+            string? maKh = HttpContext.Session.GetString("MaKh");
 
             if (!string.IsNullOrEmpty(maKh))
             {
@@ -178,7 +260,7 @@ namespace DemoShop_QuaMonMot.Controllers
                         MaHh = id,
                         tenHH = hh.TenHh,
                         DonGia = hh.DonGia ?? 0,
-                        Hinh = hh.Hinh,
+                        Hinh = hh.Hinh ?? string.Empty,
                         Soluong = quantity
                     });
                 }
@@ -194,7 +276,7 @@ namespace DemoShop_QuaMonMot.Controllers
         // --- 3. TĂNG/GIẢM SỐ LƯỢNG (Sửa lỗi 404) ---
         public IActionResult UpdateQuantity(int id, int amount)
         {
-            string maKh = HttpContext.Session.GetString("MaKh");
+            string? maKh = HttpContext.Session.GetString("MaKh");
 
             if (!string.IsNullOrEmpty(maKh))
             {
@@ -225,7 +307,7 @@ namespace DemoShop_QuaMonMot.Controllers
         // --- 4. XÓA MÓN HÀNG ---
         public IActionResult RemoveCart(int id)
         {
-            string maKh = HttpContext.Session.GetString("MaKh");
+            string? maKh = HttpContext.Session.GetString("MaKh");
 
             if (!string.IsNullOrEmpty(maKh))
             {
@@ -270,6 +352,7 @@ namespace DemoShop_QuaMonMot.Controllers
             ViewBag.HoTen = khachHang?.HoTen;
             ViewBag.DiaChi = khachHang?.DiaChi;
             ViewBag.DienThoai = khachHang?.DienThoai;
+            SetCouponViewBag(gioHang);
 
             return View(gioHang);
         }
@@ -291,7 +374,8 @@ namespace DemoShop_QuaMonMot.Controllers
                 return RedirectToAction("Index");
             }
 
-            var phiVanChuyen = gioHang.Sum(item => item.ThanhTien) > 0 ? 10.0 : 0.0;
+            var totals = GetOrderTotals(gioHang);
+            var phiVanChuyen = totals.ShippingFee;
             var maTrangThai = GetPendingOrderStatusId();
 
             if (string.IsNullOrWhiteSpace(HoTen))
@@ -320,6 +404,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 ViewBag.DiaChi = DiaChi;
                 ViewBag.DienThoai = DienThoai;
                 ViewBag.GhiChu = GhiChu;
+                SetCouponViewBag(gioHang);
                 return View(gioHang);
             }
 
@@ -353,7 +438,7 @@ namespace DemoShop_QuaMonMot.Controllers
                         MaHh = item.MaHh,
                         DonGia = item.DonGia,
                         SoLuong = item.Soluong,
-                        GiamGia = 0
+                        GiamGia = totals.Percent
                     };
 
                     _context.ChiTietHds.Add(chiTiet);
@@ -364,7 +449,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 transaction.Commit();
 
                 TempData["OrderId"] = hoaDon.MaHd;
-                TempData["OrderTotal"] = (gioHang.Sum(item => item.ThanhTien) + phiVanChuyen).ToString("#,##0.00");
+                TempData["OrderTotal"] = totals.Total.ToString("#,##0.00");
 
                 return RedirectToAction("Success");
             }
@@ -376,6 +461,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 ViewBag.DiaChi = DiaChi;
                 ViewBag.DienThoai = DienThoai;
                 ViewBag.GhiChu = GhiChu;
+                SetCouponViewBag(gioHang);
                 return View(gioHang);
             }
         }

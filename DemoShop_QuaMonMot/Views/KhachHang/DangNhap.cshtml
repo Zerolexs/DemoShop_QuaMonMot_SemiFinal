@@ -2,7 +2,7 @@
 @model DemoShop_QuaMonMot.DTOs.Login
 
 @{
-    ViewData["Title"] = "Đăng Nhập Hệ Thống";
+    ViewData["Title"] = T["LoginTitle"];
     var loginRequiredMessage = TempData["LoginRequiredMessage"] as string;
 }
 
@@ -10,8 +10,8 @@
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a>
-                <span class="breadcrumb-item active">Đăng nhập</span>
+                <a class="breadcrumb-item text-dark" asp-controller="Home" asp-action="TrangChu">@T["Home"]</a>
+                <span class="breadcrumb-item active">@T["Login"]</span>
             </nav>
         </div>
     </div>
@@ -20,7 +20,7 @@
     <div class="row px-xl-5 justify-content-center">
         <div class="col-lg-5 col-md-8">
             <h5 class="section-title position-relative text-uppercase mb-3">
-                <span class="bg-secondary pr-3">Đăng Nhập</span>
+                <span class="bg-secondary pr-3">@T["Login"]</span>
             </h5>
             <div class="bg-light p-30 mb-5">
                 @if (!string.IsNullOrEmpty(loginRequiredMessage))
@@ -37,22 +37,22 @@
                     @* Hiển thị thông báo lỗi tổng quát từ Controller *@
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                    @if (ViewData.ModelState.ContainsKey("loi"))
+                    @if (ViewData.ModelState.TryGetValue("loi", out var loginErrors) && loginErrors.Errors.Count > 0)
                     {
                         <div class="alert alert-danger">
                             <i class="fas fa-exclamation-triangle mr-2"></i>
-                            @ViewData.ModelState["loi"].Errors[0].ErrorMessage
+                            @loginErrors.Errors[0].ErrorMessage
                         </div>
                     }
 
                     <div class="form-group">
-                        <label asp-for="UserName">Tên đăng nhập</label>
-                        <input asp-for="UserName" class="form-control" placeholder="Tên đăng nhập của bạn" />
+                        <label asp-for="UserName">@T["Username"]</label>
+                        <input asp-for="UserName" class="form-control" placeholder="@T["Username"]" />
                         <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Password">Mật khẩu</label>
+                        <label asp-for="Password">@T["Password"]</label>
                         <input asp-for="Password" type="password" class="form-control" placeholder="******" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
@@ -61,21 +61,21 @@
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                             <div>
                                 <input type="checkbox" asp-for="RememberLogin" class="custom-control-input" id="remember-me">
-                                <label class="custom-control-label" for="remember-me">Ghi nhớ đăng nhập</label>
+                                <label class="custom-control-label" for="remember-me">@T["RememberLogin"]</label>
                             </div>
-                            <a href="#" class="small text-primary">Quên mật khẩu?</a>
+                            <a href="#" class="small text-primary">@T["ForgotPassword"]</a>
                         </div>
                     </div>
 
                     <div class="form-group mb-0">
-                        <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">Đăng Nhập</button>
+                        <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">@T["Login"]</button>
                     </div>
 
                     <hr />
 
                     <div class="text-center mt-3">
-                        <p class="mb-0">Bạn chưa có tài khoản?</p>
-                        <a asp-controller="KhachHang" asp-action="DangKy" class="font-weight-bold">Đăng ký thành viên mới</a>
+                        <p class="mb-0">@T["NoAccount"]</p>
+                        <a asp-controller="KhachHang" asp-action="DangKy" class="font-weight-bold">@T["RegisterNewMember"]</a>
                     </div>
                 </form>
             </div>

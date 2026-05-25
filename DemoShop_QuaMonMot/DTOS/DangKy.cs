@@ -6,17 +6,17 @@ public class DangKy
     [Display(Name = "Tên đăng nhập")]
     [Required(ErrorMessage = "*")]
     [MaxLength(20, ErrorMessage = "Tối đa 20 kí tự")]
-    public string MaKh { get; set; }
+    public string MaKh { get; set; } = string.Empty;
 
     [Display(Name = "Mật khẩu")]
     [Required(ErrorMessage = "*")]
     [DataType(DataType.Password)]
-    public string MatKhau { get; set; }
+    public string MatKhau { get; set; } = string.Empty;
 
     [Display(Name = "Họ tên")]
     [Required(ErrorMessage = "*")]
     [MaxLength(50, ErrorMessage = "Tối đa 50 kí tự")]
-    public string HoTen { get; set; }
+    public string HoTen { get; set; } = string.Empty;
 
     [Display(Name = "Giới tính")]
     public bool GioiTinh { get; set; } = true;
@@ -29,13 +29,13 @@ public class DangKy
     [MaxLength(60, ErrorMessage = "Tối đa 60 kí tự")]
 
     [Required(ErrorMessage = "*")]
-    public string DiaChi { get; set; }
+    public string DiaChi { get; set; } = string.Empty;
 
     [Display(Name = "Điện thoại")]
     [Required(ErrorMessage = "*")]
     [MaxLength(20, ErrorMessage = "Tối đa 20 kí tự")]
     [RegularExpression(@"0[39875]\d{8}", ErrorMessage = "Chưa đúng định dạng di động Việt Nam")]
-    public string DienThoai { get; set; }
+    public string DienThoai { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "*")]
     [DataType(DataType.EmailAddress)]

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="About" xml:space="preserve"><value>Giới thiệu</value></data>
+  <data name="Contact" xml:space="preserve"><value>Liên hệ</value></data>
+  <data name="Help" xml:space="preserve"><value>Trợ giúp</value></data>
+  <data name="Faqs" xml:space="preserve"><value>Câu hỏi thường gặp</value></data>
+  <data name="Account" xml:space="preserve"><value>Tài khoản</value></data>
+  <data name="MyProfile" xml:space="preserve"><value>Hồ sơ của tôi</value></data>
+  <data name="MyOrders" xml:space="preserve"><value>Đơn hàng đã mua</value></data>
+  <data name="Logout" xml:space="preserve"><value>Đăng xuất</value></data>
+  <data name="Login" xml:space="preserve"><value>Đăng nhập</value></data>
+  <data name="Vietnamese" xml:space="preserve"><value>Tiếng Việt</value></data>
+  <data name="English" xml:space="preserve"><value>Tiếng Anh</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Tìm kiếm sản phẩm...</value></data>
+  <data name="CustomerService" xml:space="preserve"><value>Chăm sóc khách hàng</value></data>
+  <data name="Categories" xml:space="preserve"><value>Danh mục</value></data>
+  <data name="LoadingCategories" xml:space="preserve"><value>Đang tải danh mục...</value></data>
+  <data name="Home" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="Shop" xml:space="preserve"><value>Cửa hàng</value></data>
+  <data name="Policy" xml:space="preserve"><value>Chính sách</value></data>
+  <data name="Cart" xml:space="preserve"><value>Giỏ hàng</value></data>
+</root>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="HomeTitle" xml:space="preserve"><value>Home</value></data>
+  <data name="ShopTitle" xml:space="preserve"><value>Home - Product list</value></data>
+  <data name="CartTitle" xml:space="preserve"><value>Cart</value></data>
+  <data name="CheckoutTitle" xml:space="preserve"><value>Checkout</value></data>
+  <data name="LoginTitle" xml:space="preserve"><value>System login</value></data>
+  <data name="RegisterTitle" xml:space="preserve"><value>Create account</value></data>
+  <data name="ProfileTitle" xml:space="preserve"><value>My profile</value></data>
+  <data name="PrivacyTeamTitle" xml:space="preserve"><value>Privacy policy &amp; Team</value></data>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Shop" xml:space="preserve"><value>Shop</value></data>
+  <data name="ProductList" xml:space="preserve"><value>Product list</value></data>
+  <data name="ExploreFeatured" xml:space="preserve"><value>Explore featured products at QuaMonMot.</value></data>
+  <data name="ViewDetails" xml:space="preserve"><value>View details</value></data>
+  <data name="FeaturedProduct" xml:space="preserve"><value>Featured product</value></data>
+  <data name="ShopNow" xml:space="preserve"><value>Shop now</value></data>
+  <data name="ProductCategories" xml:space="preserve"><value>Product categories</value></data>
+  <data name="ProductsUnit" xml:space="preserve"><value>products</value></data>
+  <data name="FeaturedProducts" xml:space="preserve"><value>Featured products</value></data>
+  <data name="LatestProducts" xml:space="preserve"><value>Latest products</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sort</value></data>
+  <data name="Latest" xml:space="preserve"><value>Latest</value></data>
+  <data name="PriceAsc" xml:space="preserve"><value>Price: low to high</value></data>
+  <data name="PriceDesc" xml:space="preserve"><value>Price: high to low</value></data>
+  <data name="AddNewProduct" xml:space="preserve"><value>Add new product</value></data>
+  <data name="Views" xml:space="preserve"><value>views</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="ConfirmDeleteProduct" xml:space="preserve"><value>Are you sure you want to delete this product?</value></data>
+  <data name="Previous" xml:space="preserve"><value>Previous</value></data>
+  <data name="Next" xml:space="preserve"><value>Next</value></data>
+  <data name="RetailPrice" xml:space="preserve"><value>Retail price</value></data>
+  <data name="Promotion" xml:space="preserve"><value>Promotion</value></data>
+  <data name="Category" xml:space="preserve"><value>Category:</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Supplier:</value></data>
+  <data name="Unit" xml:space="preserve"><value>Unit:</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="AddToCartUpper" xml:space="preserve"><value>ADD TO CART</value></data>
+  <data name="FilterByCategory" xml:space="preserve"><value>Filter by category</value></data>
+  <data name="AllCategories" xml:space="preserve"><value>All product categories</value></data>
+  <data name="NoCategoryData" xml:space="preserve"><value>No category data</value></data>
+  <data name="FilterByPrice" xml:space="preserve"><value>Filter by price</value></data>
+  <data name="AllPrices" xml:space="preserve"><value>All price ranges</value></data>
+  <data name="Price100Plus" xml:space="preserve"><value>$100 and up</value></data>
+  <data name="Product" xml:space="preserve"><value>Product</value></data>
+  <data name="Price" xml:space="preserve"><value>Price</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="LineTotal" xml:space="preserve"><value>Total</value></data>
+  <data name="EnterCoupon" xml:space="preserve"><value>Enter coupon code</value></data>
+  <data name="Apply" xml:space="preserve"><value>Apply</value></data>
+  <data name="RemoveCoupon" xml:space="preserve"><value>Remove code</value></data>
+  <data name="CartSummary" xml:space="preserve"><value>Cart summary</value></data>
+  <data name="Subtotal" xml:space="preserve"><value>Subtotal</value></data>
+  <data name="Discount" xml:space="preserve"><value>Discount</value></data>
+  <data name="ShippingFee" xml:space="preserve"><value>Shipping fee</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Checkout" xml:space="preserve"><value>Checkout</value></data>
+  <data name="ShippingInfo" xml:space="preserve"><value>Shipping information</value></data>
+  <data name="FullName" xml:space="preserve"><value>Full name</value></data>
+  <data name="FullNamePlaceholder" xml:space="preserve"><value>John Smith</value></data>
+  <data name="Phone" xml:space="preserve"><value>Phone</value></data>
+  <data name="ShippingAddress" xml:space="preserve"><value>Shipping address</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+  <data name="Order" xml:space="preserve"><value>Order</value></data>
+  <data name="CouponCode" xml:space="preserve"><value>Coupon code</value></data>
+  <data name="Payment" xml:space="preserve"><value>Payment</value></data>
+  <data name="CodPayment" xml:space="preserve"><value>Cash on delivery (COD)</value></data>
+  <data name="PlaceCodOrder" xml:space="preserve"><value>Place COD order</value></data>
+  <data name="OrderSuccess" xml:space="preserve"><value>COD order placed successfully!</value></data>
+  <data name="OrderSuccessMessage" xml:space="preserve"><value>Your order has been placed successfully. We have recorded it and will process it soon.</value></data>
+  <data name="OrderSuccessAlert" xml:space="preserve"><value>Your order has been placed successfully</value></data>
+  <data name="ViewCart" xml:space="preserve"><value>View cart</value></data>
+  <data name="OrderId" xml:space="preserve"><value>Order ID:</value></data>
+  <data name="PaymentTotal" xml:space="preserve"><value>Payment total:</value></data>
+  <data name="Login" xml:space="preserve"><value>Login</value></data>
+  <data name="Username" xml:space="preserve"><value>Username</value></data>
+  <data name="Password" xml:space="preserve"><value>Password</value></data>
+  <data name="RememberLogin" xml:space="preserve"><value>Remember me</value></data>
+  <data name="ForgotPassword" xml:space="preserve"><value>Forgot password?</value></data>
+  <data name="NoAccount" xml:space="preserve"><value>Don't have an account?</value></data>
+  <data name="RegisterNewMember" xml:space="preserve"><value>Create a new member account</value></data>
+  <data name="RegistrationInfo" xml:space="preserve"><value>Registration information</value></data>
+  <data name="Male" xml:space="preserve"><value>Male</value></data>
+  <data name="Female" xml:space="preserve"><value>Female</value></data>
+  <data name="Avatar" xml:space="preserve"><value>Avatar</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="MemberBenefits" xml:space="preserve"><value>Member benefits</value></data>
+  <data name="RewardPoints" xml:space="preserve"><value>Earn reward points</value></data>
+  <data name="BirthdayOffer" xml:space="preserve"><value>Birthday offers</value></data>
+  <data name="RegisterAgreement" xml:space="preserve"><value>By clicking Register, you agree to the shop terms.</value></data>
+  <data name="RegisterNow" xml:space="preserve"><value>Register now</value></data>
+  <data name="PersonalInfo" xml:space="preserve"><value>Personal information</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Gender" xml:space="preserve"><value>Gender</value></data>
+  <data name="BirthDate" xml:space="preserve"><value>Birth date</value></data>
+  <data name="Address" xml:space="preserve"><value>Address</value></data>
+  <data name="AddressPlaceholder" xml:space="preserve"><value>House number, street name...</value></data>
+  <data name="ShippingAddressPlaceholder" xml:space="preserve"><value>123 Main Street, District 1</value></data>
+  <data name="SaveInfo" xml:space="preserve"><value>Save information</value></data>
+  <data name="ChangePassword" xml:space="preserve"><value>Change password</value></data>
+  <data name="CurrentPassword" xml:space="preserve"><value>Current password</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>New password</value></data>
+  <data name="ConfirmNewPassword" xml:space="preserve"><value>Confirm new password</value></data>
+  <data name="UpdatePassword" xml:space="preserve"><value>Update password</value></data>
+  <data name="Wishlist" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="InStock" xml:space="preserve"><value>In stock</value></data>
+  <data name="AddToCart" xml:space="preserve"><value>Add to cart</value></data>
+  <data name="WishlistEmpty" xml:space="preserve"><value>Your wishlist is empty!</value></data>
+  <data name="ContinueShopping" xml:space="preserve"><value>Continue shopping</value></data>
+  <data name="RemoveWishlistConfirm" xml:space="preserve"><value>Remove this product from your wishlist?</value></data>
+  <data name="PrivacyPolicy" xml:space="preserve"><value>Privacy policy</value></data>
+  <data name="PrivacyIntro" xml:space="preserve"><value>Our system is committed to protecting your privacy and data based on these principles:</value></data>
+  <data name="DataSafetyTitle" xml:space="preserve"><value>Data safety:</value></data>
+  <data name="DataSafetyText" xml:space="preserve"><value>All account information is encrypted and stored securely in SQL Server.</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Privacy:</value></data>
+  <data name="PrivacyText" xml:space="preserve"><value>We do not share your personal information with third parties.</value></data>
+  <data name="TransparencyTitle" xml:space="preserve"><value>Transparency:</value></data>
+  <data name="TransparencyText" xml:space="preserve"><value>You can request to view, edit, or delete your personal information at any time.</value></data>
+  <data name="DevelopmentTeam" xml:space="preserve"><value>Development team</value></data>
+  <data name="StudentId" xml:space="preserve"><value>Student ID:</value></data>
+  <data name="TeamBioBao" xml:space="preserve"><value>The most handsome member of the team</value></data>
+  <data name="TeamBioThang" xml:space="preserve"><value>A steady sharpshooter with a funny weak spot</value></data>
+  <data name="TeamBioLong" xml:space="preserve"><value>Simply Long, in his own style</value></data>
+  <data name="FooterIntro" xml:space="preserve"><value>We believe true modern living comes from simplicity: practical fashion products combined with smart technology become ideal companions for optimizing an active everyday life.</value></data>
+  <data name="ContactAddress" xml:space="preserve"><value>Contact address</value></data>
+  <data name="StoreAddress" xml:space="preserve"><value>Bien Hoa City, Dong Nai</value></data>
+  <data name="ProductMenu" xml:space="preserve"><value>PRODUCT CATEGORIES</value></data>
+  <data name="NewCollection" xml:space="preserve"><value>New collection</value></data>
+  <data name="TechAccessories" xml:space="preserve"><value>Tech accessories</value></data>
+  <data name="SmartWatchBands" xml:space="preserve"><value>Smart watches &amp; bands</value></data>
+  <data name="StyleDevices" xml:space="preserve"><value>Style-shaping devices</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Contact us</value></data>
+  <data name="YourAccount" xml:space="preserve"><value>YOUR ACCOUNT</value></data>
+  <data name="ProductDetail" xml:space="preserve"><value>Product details</value></data>
+  <data name="Promotions" xml:space="preserve"><value>PROMOTIONS</value></data>
+  <data name="PromoText" xml:space="preserve"><value>Subscribe to receive new product updates, featured offers, and promotions from QuaMonMot.</value></data>
+  <data name="EnterEmail" xml:space="preserve"><value>Enter email address</value></data>
+  <data name="Subscribe" xml:space="preserve"><value>Subscribe</value></data>
+  <data name="FollowUs" xml:space="preserve"><value>FOLLOW US</value></data>
+  <data name="AllRightsReserved" xml:space="preserve"><value>All rights reserved.</value></data>
+  <data name="StudyDisclaimer" xml:space="preserve"><value>THIS WEBSITE IS FOR STUDY REFERENCE ONLY AND MUST NOT BE USED FOR ANY BUSINESS PURPOSE.</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>Error.</value></data>
+  <data name="ErrorMessage" xml:space="preserve"><value>An error occurred while processing your request.</value></data>
+  <data name="RequestId" xml:space="preserve"><value>Request ID:</value></data>
+  <data name="DevelopmentMode" xml:space="preserve"><value>Development mode</value></data>
+  <data name="DevelopmentModeInfo" xml:space="preserve"><value>Switching to Development will display more detailed information about the error that occurred.</value></data>
+  <data name="DevelopmentModeWarning" xml:space="preserve"><value>The Development environment should not be enabled for deployed applications.</value></data>
+  <data name="LocalDebugInfo" xml:space="preserve"><value>For local debugging, set the ASPNETCORE_ENVIRONMENT environment variable to Development and restart the app.</value></data>
+  <data name="AddedToWishlist" xml:space="preserve"><value>Added to wishlist!</value></data>
+  <data name="RemovedFromWishlist" xml:space="preserve"><value>Removed from wishlist!</value></data>
+  <data name="ServerConnectionError" xml:space="preserve"><value>Server connection error!</value></data>
+  <data name="CreateProductTitle" xml:space="preserve"><value>Add product</value></data>
+  <data name="EditProductTitle" xml:space="preserve"><value>Edit product</value></data>
+  <data name="DeleteProductTitle" xml:space="preserve"><value>Confirm product deletion</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Product name</value></data>
+  <data name="ProductType" xml:space="preserve"><value>Product type</value></data>
+  <data name="ProductionDate" xml:space="preserve"><value>Production date</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit price</value></data>
+  <data name="DiscountPercent" xml:space="preserve"><value>Discount (%)</value></data>
+  <data name="Image" xml:space="preserve"><value>Image</value></data>
+  <data name="NewImageOptional" xml:space="preserve"><value>New image (optional)</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="DetailedDescription" xml:space="preserve"><value>Detailed description</value></data>
+  <data name="ConfirmAdd" xml:space="preserve"><value>Confirm add</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Save changes</value></data>
+  <data name="EditProductPrefix" xml:space="preserve"><value>Edit:</value></data>
+  <data name="DeleteWarning" xml:space="preserve"><value>Delete warning</value></data>
+  <data name="PermanentDeleteConfirm" xml:space="preserve"><value>Are you sure you want to permanently delete this product?</value></data>
+  <data name="ProductId" xml:space="preserve"><value>Product ID:</value></data>
+  <data name="ConfirmDeleteUpper" xml:space="preserve"><value>CONFIRM DELETE</value></data>
+  <data name="CancelUpper" xml:space="preserve"><value>CANCEL</value></data>
+</root>

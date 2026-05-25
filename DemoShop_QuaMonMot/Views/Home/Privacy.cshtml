@@ -1,28 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Chính sách bảo mật & Đội ngũ";
+    ViewData["Title"] = T["PrivacyTeamTitle"];
 }
 
 <div class="container-fluid pt-5">
     <div class="container">
         <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
-            <h2 class="text-primary font-weight-bold">Chính sách bảo mật</h2>
+            <h2 class="text-primary font-weight-bold">@T["PrivacyPolicy"]</h2>
             <hr class="w-25 mx-auto">
         </div>
         <div class="row px-xl-5">
             <div class="col-lg-12 mb-5">
                 <div class="bg-light p-4 rounded shadow-sm">
-                    <p class="lead">Hệ thống của chúng tôi cam kết bảo vệ quyền riêng tư và dữ liệu của bạn dựa trên các nguyên tắc:</p>
+                    <p class="lead">@T["PrivacyIntro"]</p>
                     <ul class="list-unstyled">
-                        <li class="mb-3"><i class="fa fa-shield-alt text-primary mr-3"></i><strong>An toàn dữ liệu:</strong> Mọi thông tin tài khoản được mã hóa và lưu trữ an toàn trong SQL Server.</li>
-                        <li class="mb-3"><i class="fa fa-user-lock text-primary mr-3"></i><strong>Quyền riêng tư:</strong> Chúng tôi không chia sẻ thông tin cá nhân của bạn cho bên thứ ba.</li>
-                        <li class="mb-3"><i class="fa fa-database text-primary mr-3"></i><strong>Minh bạch:</strong> Bạn có quyền yêu cầu xem, chỉnh sửa hoặc xóa thông tin cá nhân bất kỳ lúc nào.</li>
+                        <li class="mb-3"><i class="fa fa-shield-alt text-primary mr-3"></i><strong>@T["DataSafetyTitle"]</strong> @T["DataSafetyText"]</li>
+                        <li class="mb-3"><i class="fa fa-user-lock text-primary mr-3"></i><strong>@T["PrivacyTitle"]</strong> @T["PrivacyText"]</li>
+                        <li class="mb-3"><i class="fa fa-database text-primary mr-3"></i><strong>@T["TransparencyTitle"]</strong> @T["TransparencyText"]</li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
-            <h2 class="text-primary font-weight-bold">Đội ngũ phát triển</h2>
+            <h2 class="text-primary font-weight-bold">@T["DevelopmentTeam"]</h2>
             <hr class="w-25 mx-auto">
         </div>
 
@@ -34,8 +34,8 @@
                              style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
                     </div>
                     <h5 class="font-weight-bold">Lưu Tiến Bảo</h5>
-                    <p class="text-primary text-uppercase small mb-2">Mssv:1923040479</p>
-                    <p class="px-2 text-muted">Đẹp Trai nhất nhóm</p>
+                    <p class="text-primary text-uppercase small mb-2">@T["StudentId"] 1923040479</p>
+                    <p class="px-2 text-muted">@T["TeamBioBao"]</p>
                 </div>
             </div>
 
@@ -46,8 +46,8 @@
                              style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
                     </div>
                     <h5 class="font-weight-bold">Phan Quốc Thắng</h5>
-                    <p class="text-primary text-uppercase small mb-2">Mssv:xxxxxxxxx</p>
-                    <p class="px-2 text-muted">Bắn nhắm mà không di chuyển để bị móc</p>
+                    <p class="text-primary text-uppercase small mb-2">@T["StudentId"] xxxxxxxxx</p>
+                    <p class="px-2 text-muted">@T["TeamBioThang"]</p>
                 </div>
             </div>
 
@@ -58,8 +58,8 @@
                              style="object-fit: cover;" onerror="this.src='/Hinh/HangHoa/default.jpg';">
                     </div>
                     <h5 class="font-weight-bold">Nguyễn Thành Long</h5>
-                    <p class="text-primary text-uppercase small mb-2">Mssv:xxxxxxxxx</p>
-                    <p class="px-2 text-muted">Đơn giản là Lôn Lòng</p>
+                    <p class="text-primary text-uppercase small mb-2">@T["StudentId"] xxxxxxxxx</p>
+                    <p class="px-2 text-muted">@T["TeamBioLong"]</p>
                 </div>
             </div>
         </div>

@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<DemoShop_QuaMonMot.Models.CartItem>
 @{
-    ViewData["Title"] = "Giỏ Hàng";
+    ViewData["Title"] = T["CartTitle"];
+    var subtotal = Model.Sum(s => s.ThanhTien);
+    var shippingFee = ViewBag.ShippingFee as double? ?? (subtotal > 0 ? 10.0 : 0.0);
+    var couponDiscount = ViewBag.CouponDiscount as double? ?? 0.0;
+    var orderTotal = ViewBag.OrderTotal as double? ?? Math.Max(0, subtotal - couponDiscount + shippingFee);
+    var couponCode = ViewBag.CouponCode as string;
+    var couponName = ViewBag.CouponName as string;
 }
-<!-- Cart Start -->
+<!-- Bắt đầu giỏ hàng -->
 <div class="container-fluid">
     <div class="row px-xl-5">
         <div class="col-lg-8 table-responsive mb-5">
             <table class="table table-light table-borderless table-hover text-center mb-0">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Products</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Remove</th>
+                        <th>@T["Product"]</th>
+                        <th>@T["Price"]</th>
+                        <th>@T["Quantity"]</th>
+                        <th>@T["LineTotal"]</th>
+                        <th>@T["Delete"]</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
@@ -21,7 +27,7 @@
                     {
                         <tr>
                             <td class="align-middle"><img src="~/Hinh/HangHoa/@item.Hinh" alt="@item.tenHH" style="width: 50px;"><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh">@item.tenHH</a></td>
-                            <td class="align-middle">$@item.DonGia</td>
+                            <td class="align-middle">$@item.DonGia.ToString("#,##0.00")</td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -45,7 +51,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle">$@item.ThanhTien</td>
+                            <td class="align-middle">$@item.ThanhTien.ToString("#,##0.00")</td>
                             <td class="align-middle">
                                 <a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.MaHh">
                                     <button class="btn btn-sm btn-danger">
@@ -60,35 +66,66 @@
             </table>
         </div>
         <div class="col-lg-4">
-            <form class="mb-30" action="">
+            <form class="mb-3" asp-action="ApplyCoupon" asp-controller="Cart" method="post">
                 <div class="input-group">
-                    <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+                    <input type="text" name="couponCode" class="form-control border-0 p-4" value="@couponCode" placeholder="@T["EnterCoupon"]">
                     <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
+                        <button type="submit" class="btn btn-primary">@T["Apply"]</button>
                     </div>
                 </div>
             </form>
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
+
+            @if (TempData["CouponMessage"] != null)
+            {
+                <div class="alert alert-success py-2">@TempData["CouponMessage"]</div>
+            }
+
+            @if (TempData["CouponError"] != null)
+            {
+                <div class="alert alert-danger py-2">@TempData["CouponError"]</div>
+            }
+
+            @if (!string.IsNullOrEmpty(couponCode))
+            {
+                <form asp-action="RemoveCoupon" asp-controller="Cart" method="post" class="mb-30">
+                    <div class="d-flex align-items-center justify-content-between bg-light p-3">
+                        <div>
+                            <strong>@couponCode</strong>
+                            <div class="small text-muted">@couponName</div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">@T["RemoveCoupon"]</button>
+                    </div>
+                </form>
+            }
+
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">@T["CartSummary"]</span></h5>
             <div class="bg-light p-30 mb-5">
                 <div class="border-bottom pb-2">
                     <div class="d-flex justify-content-between mb-3">
-                        <h6>Subtotal</h6>
-                        <h6>$@Model.Sum(s =>s.ThanhTien)</h6>
+                        <h6>@T["Subtotal"]</h6>
+                        <h6>$@subtotal.ToString("#,##0.00")</h6>
                     </div>
+                    @if (couponDiscount > 0)
+                    {
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6 class="font-weight-medium">@T["Discount"]</h6>
+                            <h6 class="font-weight-medium text-success">-$@couponDiscount.ToString("#,##0.00")</h6>
+                        </div>
+                    }
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium">@T["ShippingFee"]</h6>
+                        <h6 class="font-weight-medium">$@shippingFee.ToString("#,##0.00")</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
-                        <h5>Total</h5>
-                        <h5>$@(Model.Sum(s => s.ThanhTien) + 10)</h5>
+                        <h5>@T["Total"]</h5>
+                        <h5>$@orderTotal.ToString("#,##0.00")</h5>
                     </div>
                     <a asp-action="ThanhToan"
                        asp-controller="Cart"
                        class="btn btn-block btn-primary font-weight-bold my-3 py-3">
-                        Thanh Toán
+                        @T["Checkout"]
                     </a>
 
                 </div>
@@ -96,4 +133,4 @@
         </div>
     </div>
 </div>
-<!-- Cart End -->
+<!-- Kết thúc giỏ hàng -->

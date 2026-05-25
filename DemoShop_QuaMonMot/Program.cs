@@ -1,7 +1,8 @@
 ﻿using DemoShop_QuaMonMot.Data;
-using DemoShop_QuaMonMot.Helpers;
-using DemoShop_QuaMonMot.Helpers;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace DemoShop_QuaMonMot
 {
@@ -10,9 +11,18 @@ namespace DemoShop_QuaMonMot
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            var dataProtectionKeysPath = Path.Combine(builder.Environment.ContentRootPath, "App_Data", "DataProtection-Keys");
+            Directory.CreateDirectory(dataProtectionKeysPath);
+            builder.Services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(dataProtectionKeysPath));
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+            builder.Services.AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
             var myConnectionString = builder.Configuration.GetConnectionString("MyConnectString");
             builder.Services.AddDbContext<DemoShopContext>(option => option.UseSqlServer(myConnectionString));
             // 1. Đăng ký Distributed Cache để Session hoạt động
@@ -24,8 +34,6 @@ namespace DemoShop_QuaMonMot
                 options.Cookie.IsEssential = true;
                 options.Cookie.HttpOnly = true;
             });
-            // Đăng ký AutoMapper
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
             var app = builder.Build();
             // // Register your DbContext 
 
@@ -39,13 +47,24 @@ namespace DemoShop_QuaMonMot
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            var supportedCultures = new[] { new CultureInfo("vi"), new CultureInfo("en") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("vi"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseSession();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="HomeTitle" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="ShopTitle" xml:space="preserve"><value>Trang chủ - Danh sách sản phẩm</value></data>
+  <data name="CartTitle" xml:space="preserve"><value>Giỏ hàng</value></data>
+  <data name="CheckoutTitle" xml:space="preserve"><value>Thanh toán</value></data>
+  <data name="LoginTitle" xml:space="preserve"><value>Đăng nhập hệ thống</value></data>
+  <data name="RegisterTitle" xml:space="preserve"><value>Đăng ký tài khoản</value></data>
+  <data name="ProfileTitle" xml:space="preserve"><value>Hồ sơ cá nhân</value></data>
+  <data name="PrivacyTeamTitle" xml:space="preserve"><value>Chính sách bảo mật &amp; Đội ngũ</value></data>
+  <data name="Home" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="Shop" xml:space="preserve"><value>Cửa hàng</value></data>
+  <data name="ProductList" xml:space="preserve"><value>Danh sách sản phẩm</value></data>
+  <data name="ExploreFeatured" xml:space="preserve"><value>Khám phá sản phẩm nổi bật tại QuaMonMot.</value></data>
+  <data name="ViewDetails" xml:space="preserve"><value>Xem chi tiết</value></data>
+  <data name="FeaturedProduct" xml:space="preserve"><value>Sản phẩm nổi bật</value></data>
+  <data name="ShopNow" xml:space="preserve"><value>Xem ngay</value></data>
+  <data name="ProductCategories" xml:space="preserve"><value>Danh mục sản phẩm</value></data>
+  <data name="ProductsUnit" xml:space="preserve"><value>sản phẩm</value></data>
+  <data name="FeaturedProducts" xml:space="preserve"><value>Sản phẩm nổi bật</value></data>
+  <data name="LatestProducts" xml:space="preserve"><value>Sản phẩm mới nhất</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sắp xếp</value></data>
+  <data name="Latest" xml:space="preserve"><value>Mới nhất</value></data>
+  <data name="PriceAsc" xml:space="preserve"><value>Giá tăng dần</value></data>
+  <data name="PriceDesc" xml:space="preserve"><value>Giá giảm dần</value></data>
+  <data name="AddNewProduct" xml:space="preserve"><value>Thêm sản phẩm mới</value></data>
+  <data name="Views" xml:space="preserve"><value>lượt xem</value></data>
+  <data name="Edit" xml:space="preserve"><value>Sửa</value></data>
+  <data name="Delete" xml:space="preserve"><value>Xóa</value></data>
+  <data name="ConfirmDeleteProduct" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa sản phẩm này không?</value></data>
+  <data name="Previous" xml:space="preserve"><value>Trước</value></data>
+  <data name="Next" xml:space="preserve"><value>Sau</value></data>
+  <data name="RetailPrice" xml:space="preserve"><value>Giá bán lẻ</value></data>
+  <data name="Promotion" xml:space="preserve"><value>Khuyến mãi</value></data>
+  <data name="Category" xml:space="preserve"><value>Danh mục:</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Nhà cung cấp:</value></data>
+  <data name="Unit" xml:space="preserve"><value>Đơn vị tính:</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Chưa rõ</value></data>
+  <data name="AddToCartUpper" xml:space="preserve"><value>THÊM VÀO GIỎ HÀNG</value></data>
+  <data name="FilterByCategory" xml:space="preserve"><value>Lọc theo loại</value></data>
+  <data name="AllCategories" xml:space="preserve"><value>Tất cả loại sản phẩm</value></data>
+  <data name="NoCategoryData" xml:space="preserve"><value>Không có dữ liệu loại sản phẩm</value></data>
+  <data name="FilterByPrice" xml:space="preserve"><value>Lọc theo giá</value></data>
+  <data name="AllPrices" xml:space="preserve"><value>Tất cả mức giá</value></data>
+  <data name="Price100Plus" xml:space="preserve"><value>$100 trở lên</value></data>
+  <data name="Product" xml:space="preserve"><value>Sản phẩm</value></data>
+  <data name="Price" xml:space="preserve"><value>Giá</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Số lượng</value></data>
+  <data name="LineTotal" xml:space="preserve"><value>Thành tiền</value></data>
+  <data name="EnterCoupon" xml:space="preserve"><value>Nhập mã giảm giá</value></data>
+  <data name="Apply" xml:space="preserve"><value>Áp dụng</value></data>
+  <data name="RemoveCoupon" xml:space="preserve"><value>Bỏ mã</value></data>
+  <data name="CartSummary" xml:space="preserve"><value>Tóm tắt giỏ hàng</value></data>
+  <data name="Subtotal" xml:space="preserve"><value>Tạm tính</value></data>
+  <data name="Discount" xml:space="preserve"><value>Giảm giá</value></data>
+  <data name="ShippingFee" xml:space="preserve"><value>Phí vận chuyển</value></data>
+  <data name="Total" xml:space="preserve"><value>Tổng cộng</value></data>
+  <data name="Checkout" xml:space="preserve"><value>Thanh toán</value></data>
+  <data name="ShippingInfo" xml:space="preserve"><value>Thông tin giao hàng</value></data>
+  <data name="FullName" xml:space="preserve"><value>Họ tên</value></data>
+  <data name="FullNamePlaceholder" xml:space="preserve"><value>Nguyễn Văn A</value></data>
+  <data name="Phone" xml:space="preserve"><value>Điện thoại</value></data>
+  <data name="ShippingAddress" xml:space="preserve"><value>Địa chỉ giao hàng</value></data>
+  <data name="Note" xml:space="preserve"><value>Ghi chú</value></data>
+  <data name="Order" xml:space="preserve"><value>Đơn hàng</value></data>
+  <data name="CouponCode" xml:space="preserve"><value>Mã giảm giá</value></data>
+  <data name="Payment" xml:space="preserve"><value>Thanh toán</value></data>
+  <data name="CodPayment" xml:space="preserve"><value>Thanh toán khi nhận hàng (COD)</value></data>
+  <data name="PlaceCodOrder" xml:space="preserve"><value>Đặt hàng COD</value></data>
+  <data name="OrderSuccess" xml:space="preserve"><value>Đặt hàng COD thành công!</value></data>
+  <data name="OrderSuccessMessage" xml:space="preserve"><value>Quý khách đã đặt hàng thành công. Đơn hàng của bạn đã được ghi nhận và sẽ được xử lý sớm.</value></data>
+  <data name="OrderSuccessAlert" xml:space="preserve"><value>Quý khách đã đặt hàng thành công</value></data>
+  <data name="ViewCart" xml:space="preserve"><value>Xem giỏ hàng</value></data>
+  <data name="OrderId" xml:space="preserve"><value>Mã đơn hàng:</value></data>
+  <data name="PaymentTotal" xml:space="preserve"><value>Tổng thanh toán:</value></data>
+  <data name="Login" xml:space="preserve"><value>Đăng nhập</value></data>
+  <data name="Username" xml:space="preserve"><value>Tên đăng nhập</value></data>
+  <data name="Password" xml:space="preserve"><value>Mật khẩu</value></data>
+  <data name="RememberLogin" xml:space="preserve"><value>Ghi nhớ đăng nhập</value></data>
+  <data name="ForgotPassword" xml:space="preserve"><value>Quên mật khẩu?</value></data>
+  <data name="NoAccount" xml:space="preserve"><value>Bạn chưa có tài khoản?</value></data>
+  <data name="RegisterNewMember" xml:space="preserve"><value>Đăng ký thành viên mới</value></data>
+  <data name="RegistrationInfo" xml:space="preserve"><value>Thông tin đăng ký</value></data>
+  <data name="Male" xml:space="preserve"><value>Nam</value></data>
+  <data name="Female" xml:space="preserve"><value>Nữ</value></data>
+  <data name="Avatar" xml:space="preserve"><value>Ảnh đại diện</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Xác nhận</value></data>
+  <data name="MemberBenefits" xml:space="preserve"><value>Quyền lợi thành viên</value></data>
+  <data name="RewardPoints" xml:space="preserve"><value>Tích lũy điểm thưởng</value></data>
+  <data name="BirthdayOffer" xml:space="preserve"><value>Ưu đãi ngày sinh nhật</value></data>
+  <data name="RegisterAgreement" xml:space="preserve"><value>Bằng cách nhấn Đăng ký, bạn đồng ý với các điều khoản của shop.</value></data>
+  <data name="RegisterNow" xml:space="preserve"><value>Đăng ký ngay</value></data>
+  <data name="PersonalInfo" xml:space="preserve"><value>Thông tin cá nhân</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Gender" xml:space="preserve"><value>Giới tính</value></data>
+  <data name="BirthDate" xml:space="preserve"><value>Ngày sinh</value></data>
+  <data name="Address" xml:space="preserve"><value>Địa chỉ</value></data>
+  <data name="AddressPlaceholder" xml:space="preserve"><value>Số nhà, tên đường...</value></data>
+  <data name="ShippingAddressPlaceholder" xml:space="preserve"><value>123 Lê Lợi, Quận 1</value></data>
+  <data name="SaveInfo" xml:space="preserve"><value>Lưu thông tin</value></data>
+  <data name="ChangePassword" xml:space="preserve"><value>Đổi mật khẩu</value></data>
+  <data name="CurrentPassword" xml:space="preserve"><value>Mật khẩu hiện tại</value></data>
+  <data name="NewPassword" xml:space="preserve"><value>Mật khẩu mới</value></data>
+  <data name="ConfirmNewPassword" xml:space="preserve"><value>Xác nhận mật khẩu mới</value></data>
+  <data name="UpdatePassword" xml:space="preserve"><value>Cập nhật mật khẩu</value></data>
+  <data name="Wishlist" xml:space="preserve"><value>Danh sách yêu thích</value></data>
+  <data name="Status" xml:space="preserve"><value>Tình trạng</value></data>
+  <data name="InStock" xml:space="preserve"><value>Còn hàng</value></data>
+  <data name="AddToCart" xml:space="preserve"><value>Thêm vào giỏ</value></data>
+  <data name="WishlistEmpty" xml:space="preserve"><value>Danh sách yêu thích đang trống!</value></data>
+  <data name="ContinueShopping" xml:space="preserve"><value>Tiếp tục mua sắm</value></data>
+  <data name="RemoveWishlistConfirm" xml:space="preserve"><value>Bạn có muốn bỏ sản phẩm này khỏi danh sách yêu thích?</value></data>
+  <data name="PrivacyPolicy" xml:space="preserve"><value>Chính sách bảo mật</value></data>
+  <data name="PrivacyIntro" xml:space="preserve"><value>Hệ thống của chúng tôi cam kết bảo vệ quyền riêng tư và dữ liệu của bạn dựa trên các nguyên tắc:</value></data>
+  <data name="DataSafetyTitle" xml:space="preserve"><value>An toàn dữ liệu:</value></data>
+  <data name="DataSafetyText" xml:space="preserve"><value>Mọi thông tin tài khoản được mã hóa và lưu trữ an toàn trong SQL Server.</value></data>
+  <data name="PrivacyTitle" xml:space="preserve"><value>Quyền riêng tư:</value></data>
+  <data name="PrivacyText" xml:space="preserve"><value>Chúng tôi không chia sẻ thông tin cá nhân của bạn cho bên thứ ba.</value></data>
+  <data name="TransparencyTitle" xml:space="preserve"><value>Minh bạch:</value></data>
+  <data name="TransparencyText" xml:space="preserve"><value>Bạn có quyền yêu cầu xem, chỉnh sửa hoặc xóa thông tin cá nhân bất kỳ lúc nào.</value></data>
+  <data name="DevelopmentTeam" xml:space="preserve"><value>Đội ngũ phát triển</value></data>
+  <data name="StudentId" xml:space="preserve"><value>MSSV:</value></data>
+  <data name="TeamBioBao" xml:space="preserve"><value>Đẹp trai nhất nhóm</value></data>
+  <data name="TeamBioThang" xml:space="preserve"><value>Bắn nhắm mà không di chuyển để bị móc</value></data>
+  <data name="TeamBioLong" xml:space="preserve"><value>Đơn giản là Lôn Lòng</value></data>
+  <data name="FooterIntro" xml:space="preserve"><value>Chúng tôi tin rằng sự hiện đại thực sự đến từ sự tối giản: Những sản phẩm thời trang mang tính ứng dụng cao kết hợp cùng công nghệ thông minh sẽ là người bạn đồng hành lý tưởng, giúp bạn tối ưu hóa cuộc sống năng động mỗi ngày.</value></data>
+  <data name="ContactAddress" xml:space="preserve"><value>Địa chỉ liên hệ</value></data>
+  <data name="StoreAddress" xml:space="preserve"><value>Thành phố Biên Hòa, Đồng Nai</value></data>
+  <data name="ProductMenu" xml:space="preserve"><value>DANH MỤC SẢN PHẨM</value></data>
+  <data name="NewCollection" xml:space="preserve"><value>Bộ sưu tập mới</value></data>
+  <data name="TechAccessories" xml:space="preserve"><value>Phụ kiện công nghệ</value></data>
+  <data name="SmartWatchBands" xml:space="preserve"><value>Đồng hồ &amp; Vòng tay thông minh</value></data>
+  <data name="StyleDevices" xml:space="preserve"><value>Thiết bị định hình phong cách</value></data>
+  <data name="ContactUs" xml:space="preserve"><value>Liên hệ với chúng tôi</value></data>
+  <data name="YourAccount" xml:space="preserve"><value>TÀI KHOẢN CỦA BẠN</value></data>
+  <data name="ProductDetail" xml:space="preserve"><value>Chi tiết sản phẩm</value></data>
+  <data name="Promotions" xml:space="preserve"><value>NHẬN TIN KHUYẾN MÃI</value></data>
+  <data name="PromoText" xml:space="preserve"><value>Đăng ký để nhận thông tin sản phẩm mới, ưu đãi nổi bật và các chương trình khuyến mãi từ QuaMonMot.</value></data>
+  <data name="EnterEmail" xml:space="preserve"><value>Nhập địa chỉ email</value></data>
+  <data name="Subscribe" xml:space="preserve"><value>Đăng ký</value></data>
+  <data name="FollowUs" xml:space="preserve"><value>KẾT NỐI VỚI CHÚNG TÔI</value></data>
+  <data name="AllRightsReserved" xml:space="preserve"><value>Tất cả quyền được bảo lưu.</value></data>
+  <data name="StudyDisclaimer" xml:space="preserve"><value>WEBSITE CHỈ MANG TÍNH THAM KHẢO HỌC TẬP, KHÔNG SỬ DỤNG DƯỚI BẤT KỲ HÌNH THỨC KINH DOANH NÀO.</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>Lỗi.</value></data>
+  <data name="ErrorMessage" xml:space="preserve"><value>Đã xảy ra lỗi trong quá trình xử lý yêu cầu của bạn.</value></data>
+  <data name="RequestId" xml:space="preserve"><value>Mã yêu cầu:</value></data>
+  <data name="DevelopmentMode" xml:space="preserve"><value>Chế độ phát triển</value></data>
+  <data name="DevelopmentModeInfo" xml:space="preserve"><value>Chuyển sang môi trường Development sẽ hiển thị thêm thông tin chi tiết về lỗi đã xảy ra.</value></data>
+  <data name="DevelopmentModeWarning" xml:space="preserve"><value>Không nên bật môi trường Development cho ứng dụng đã triển khai.</value></data>
+  <data name="LocalDebugInfo" xml:space="preserve"><value>Để gỡ lỗi cục bộ, hãy đặt biến môi trường ASPNETCORE_ENVIRONMENT thành Development rồi khởi động lại ứng dụng.</value></data>
+  <data name="AddedToWishlist" xml:space="preserve"><value>Đã thêm vào yêu thích!</value></data>
+  <data name="RemovedFromWishlist" xml:space="preserve"><value>Đã bỏ khỏi yêu thích!</value></data>
+  <data name="ServerConnectionError" xml:space="preserve"><value>Lỗi kết nối máy chủ!</value></data>
+  <data name="CreateProductTitle" xml:space="preserve"><value>Thêm sản phẩm</value></data>
+  <data name="EditProductTitle" xml:space="preserve"><value>Chỉnh sửa sản phẩm</value></data>
+  <data name="DeleteProductTitle" xml:space="preserve"><value>Xác nhận xóa sản phẩm</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Tên sản phẩm</value></data>
+  <data name="ProductType" xml:space="preserve"><value>Loại sản phẩm</value></data>
+  <data name="ProductionDate" xml:space="preserve"><value>Ngày sản xuất</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Đơn giá</value></data>
+  <data name="DiscountPercent" xml:space="preserve"><value>Giảm giá (%)</value></data>
+  <data name="Image" xml:space="preserve"><value>Hình ảnh</value></data>
+  <data name="NewImageOptional" xml:space="preserve"><value>Hình ảnh mới (nếu có)</value></data>
+  <data name="Description" xml:space="preserve"><value>Mô tả</value></data>
+  <data name="DetailedDescription" xml:space="preserve"><value>Mô tả chi tiết</value></data>
+  <data name="ConfirmAdd" xml:space="preserve"><value>Xác nhận thêm</value></data>
+  <data name="SaveChanges" xml:space="preserve"><value>Lưu thay đổi</value></data>
+  <data name="EditProductPrefix" xml:space="preserve"><value>Sửa:</value></data>
+  <data name="DeleteWarning" xml:space="preserve"><value>Cảnh báo xóa</value></data>
+  <data name="PermanentDeleteConfirm" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa vĩnh viễn sản phẩm này?</value></data>
+  <data name="ProductId" xml:space="preserve"><value>Mã sản phẩm:</value></data>
+  <data name="ConfirmDeleteUpper" xml:space="preserve"><value>XÁC NHẬN XÓA</value></data>
+  <data name="CancelUpper" xml:space="preserve"><value>HỦY BỎ</value></data>
+</root>

@@ -1,4 +1,3 @@
-﻿using AutoMapper;
 using DemoShop_QuaMonMot.Data;
 using DemoShop_QuaMonMot.DTOs;
 using DemoShop_QuaMonMot.Models;
@@ -14,12 +13,10 @@ namespace DemoShop_QuaMonMot.Controllers
     public class KhachHangController : Controller
     {
         private readonly DemoShopContext _context;
-        private readonly IMapper _mapper;
 
-        public KhachHangController(DemoShopContext context, IMapper mapper)
+        public KhachHangController(DemoShopContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         #region Đăng ký - Đăng nhập - Đăng xuất
@@ -35,12 +32,21 @@ namespace DemoShop_QuaMonMot.Controllers
         {
             if (ModelState.IsValid)
             {
-                var khachHang = _mapper.Map<KhachHang>(model);
-
-                // Gán thêm các trường mà DTO không có
-                khachHang.HieuLuc = true;
-                khachHang.VaiTro = 0;
-                khachHang.RandomKey = Guid.NewGuid().ToString();
+                var khachHang = new KhachHang
+                {
+                    MaKh = model.MaKh,
+                    MatKhau = model.MatKhau,
+                    HoTen = model.HoTen,
+                    GioiTinh = model.GioiTinh,
+                    NgaySinh = model.NgaySinh ?? DateTime.Now,
+                    DiaChi = model.DiaChi,
+                    DienThoai = model.DienThoai,
+                    Email = model.Email ?? string.Empty,
+                    Hinh = model.Hinh,
+                    HieuLuc = true,
+                    VaiTro = 0,
+                    RandomKey = Guid.NewGuid().ToString()
+                };
 
                 _context.Add(khachHang);
                 await _context.SaveChangesAsync();
@@ -86,7 +92,7 @@ namespace DemoShop_QuaMonMot.Controllers
             // 2. Xóa cookie session
             foreach (var cookie in Request.Cookies.Keys)
             {
-                if (cookie == ".AspNetCore.Session")
+                if (cookie == "My.Session")
                 {
                     Response.Cookies.Delete(cookie);
                 }

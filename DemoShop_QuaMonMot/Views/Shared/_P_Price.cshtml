@@ -1,32 +1,38 @@
-﻿<h5 class="section-title position-relative text-uppercase mb-3">
-    <span class="bg-secondary pr-3">Filter by price</span>
+<h5 class="section-title position-relative text-uppercase mb-3">
+    <span class="bg-secondary pr-3">@T["FilterByPrice"]</span>
 </h5>
 <div class="bg-light p-4 mb-30">
     <form asp-action="Index" asp-controller="Home" method="get" id="filterForm">
         <input type="hidden" name="maLoai" value="@Context.Request.Query["maLoai"]" />
 
+        @{
+            var priceRangeCounts = ViewBag.PriceRangeCounts as Dictionary<string, int> ?? new Dictionary<string, int>();
+            var priceRanges = new List<(string Value, string Label)>();
+
+            for (var min = 0; min < 100; min += 10)
+            {
+                priceRanges.Add(($"{min}-{min + 10}", $"${min} - ${min + 10}"));
+            }
+
+            priceRanges.Add(("100-plus", T["Price100Plus"].Value));
+        }
+
         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
             <input type="checkbox" class="custom-control-input" id="price-all"
                    onclick="window.location.href='@Url.Action("Index", "Home")'"
                    @(Context.Request.Query["priceRanges"].Count == 0 ? "checked" : "")>
-            <label class="custom-control-label" for="price-all">All Price</label>
+            <label class="custom-control-label" for="price-all">@T["AllPrices"]</label>
             <span class="badge border font-weight-normal">@ViewBag.AllCount</span>
         </div>
 
-        @foreach (var range in new Dictionary<string, int> {
-                { "0-100", (int)(ViewBag.Count0_100 ?? 0) },
-                { "100-200", (int)(ViewBag.Count100_200 ?? 0) },
-                { "200-300", (int)(ViewBag.Count200_300 ?? 0) },
-                { "300-400", (int)(ViewBag.Count300_400 ?? 0) },
-                { "400-500", (int)(ViewBag.Count400_500 ?? 0) }
-                })
+        @foreach (var range in priceRanges)
         {
             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" name="priceRanges" value="@range.Key" class="custom-control-input"
-                       id="price-@range.Key" onchange="document.getElementById('filterForm').submit()"
-                       @(Context.Request.Query["priceRanges"].Any(v => v == range.Key) ? "checked" : "")>
-                <label class="custom-control-label" for="price-@range.Key">$@range.Key.Replace("-", " - $")</label>
-                <span class="badge border font-weight-normal">@range.Value</span>
+                <input type="checkbox" name="priceRanges" value="@range.Value" class="custom-control-input"
+                       id="price-@range.Value" onchange="document.getElementById('filterForm').submit()"
+                       @(Context.Request.Query["priceRanges"].Any(v => v == range.Value) ? "checked" : "")>
+                <label class="custom-control-label" for="price-@range.Value">@range.Label</label>
+                <span class="badge border font-weight-normal">@(priceRangeCounts.TryGetValue(range.Value, out var count) ? count : 0)</span>
             </div>
         }
     </form>

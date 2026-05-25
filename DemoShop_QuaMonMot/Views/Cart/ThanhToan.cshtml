@@ -2,18 +2,21 @@
 
 
 @{
-    ViewData["Title"] = "Thanh toán";
+    ViewData["Title"] = T["CheckoutTitle"];
 
     var subtotal = Model.Sum(item => item.ThanhTien);
-    var shippingFee = subtotal > 0 ? 10.0 : 0.0;
-    var total = subtotal + shippingFee;
+    var couponDiscount = ViewBag.CouponDiscount as double? ?? 0.0;
+    var shippingFee = ViewBag.ShippingFee as double? ?? (subtotal > 0 ? 10.0 : 0.0);
+    var total = ViewBag.OrderTotal as double? ?? Math.Max(0, subtotal - couponDiscount + shippingFee);
+    var couponCode = ViewBag.CouponCode as string;
+    var couponName = ViewBag.CouponName as string;
     var hoTen = ViewBag.HoTen as string;
     var dienThoai = ViewBag.DienThoai as string;
     var diaChi = ViewBag.DiaChi as string;
     var ghiChu = ViewBag.GhiChu as string;
 }
 
-<!-- Checkout Start -->
+<!-- Bắt đầu thanh toán -->
 <div class="container-fluid">
     <form asp-action="ThanhToan" asp-controller="Cart" method="post">
         <input type="hidden" name="PhiVanChuyen" value="@shippingFee" />
@@ -21,7 +24,7 @@
         <div class="row px-xl-5">
             <div class="col-lg-8">
                 <h5 class="section-title position-relative text-uppercase mb-3">
-                    <span class="bg-secondary pr-3">Thông tin giao hàng</span>
+                    <span class="bg-secondary pr-3">@T["ShippingInfo"]</span>
                 </h5>
 
                 <div class="bg-light p-30 mb-5">
@@ -32,26 +35,26 @@
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>Họ tên</label>
-                            <input name="HoTen" class="form-control" type="text" value="@hoTen" placeholder="Nguyễn Văn A" required>
+                            <label>@T["FullName"]</label>
+                            <input name="HoTen" class="form-control" type="text" value="@hoTen" placeholder="@T["FullNamePlaceholder"]" required>
                             @Html.ValidationMessage("HoTen", "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-6 form-group">
-                            <label>Điện thoại</label>
+                            <label>@T["Phone"]</label>
                             <input name="DienThoai" class="form-control" type="text" value="@dienThoai" placeholder="0123456789" required>
                             @Html.ValidationMessage("DienThoai", "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label>Địa chỉ giao hàng</label>
-                            <input name="DiaChi" class="form-control" type="text" value="@diaChi" placeholder="123 Lê Lợi, Quận 1" required>
+                            <label>@T["ShippingAddress"]</label>
+                            <input name="DiaChi" class="form-control" type="text" value="@diaChi" placeholder="@T["ShippingAddressPlaceholder"]" required>
                             @Html.ValidationMessage("DiaChi", "", new { @class = "text-danger" })
                         </div>
 
                         <div class="col-md-12 form-group">
-                            <label>Ghi chú</label>
-                            <textarea name="GhiChu" class="form-control" rows="5" placeholder="Ghi chú đơn hàng">@ghiChu</textarea>
+                            <label>@T["Note"]</label>
+                            <textarea name="GhiChu" class="form-control" rows="5" placeholder="@T["Note"]">@ghiChu</textarea>
                         </div>
                     </div>
                 </div>
@@ -59,12 +62,12 @@
 
             <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3">
-                    <span class="bg-secondary pr-3">Đơn hàng</span>
+                    <span class="bg-secondary pr-3">@T["Order"]</span>
                 </h5>
 
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom">
-                        <h6 class="mb-3">Sản phẩm</h6>
+                        <h6 class="mb-3">@T["Product"]</h6>
 
                         @foreach (var item in Model)
                         {
@@ -77,7 +80,7 @@
 
                                     <div>
                                         <p class="mb-0">@item.tenHH</p>
-                                        <small>SL: @item.Soluong x $@item.DonGia.ToString("#,##0.00")</small>
+                                        <small>@T["Quantity"]: @item.Soluong x $@item.DonGia.ToString("#,##0.00")</small>
                                     </div>
                                 </div>
 
@@ -88,19 +91,36 @@
 
                     <div class="border-bottom pt-3 pb-2">
                         <div class="d-flex justify-content-between mb-3">
-                            <h6>Tạm tính</h6>
+                            <h6>@T["Subtotal"]</h6>
                             <h6>$@subtotal.ToString("#,##0.00")</h6>
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Phí vận chuyển</h6>
+                            <h6 class="font-weight-medium">@T["ShippingFee"]</h6>
                             <h6 class="font-weight-medium">$@shippingFee.ToString("#,##0.00")</h6>
                         </div>
+
+                        @if (!string.IsNullOrEmpty(couponCode))
+                        {
+                            <div class="d-flex justify-content-between mt-3">
+                                <h6 class="font-weight-medium">@T["CouponCode"]</h6>
+                                <h6 class="font-weight-medium">@couponCode</h6>
+                            </div>
+                            <p class="small text-muted mb-2">@couponName</p>
+                        }
+
+                        @if (couponDiscount > 0)
+                        {
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">@T["Discount"]</h6>
+                                <h6 class="font-weight-medium text-success">-$@couponDiscount.ToString("#,##0.00")</h6>
+                            </div>
+                        }
                     </div>
 
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5>Tổng cộng</h5>
+                            <h5>@T["Total"]</h5>
                             <h5>$@total.ToString("#,##0.00")</h5>
                         </div>
                     </div>
@@ -108,19 +128,19 @@
 
                 <div class="mb-5">
                     <h5 class="section-title position-relative text-uppercase mb-3">
-                        <span class="bg-secondary pr-3">Thanh toán</span>
+                        <span class="bg-secondary pr-3">@T["Payment"]</span>
                     </h5>
 
                     <div class="bg-light p-30">
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment" id="cod" value="COD" checked>
-                                <label class="custom-control-label" for="cod">Thanh toán khi nhận hàng (COD)</label>
+                                <label class="custom-control-label" for="cod">@T["CodPayment"]</label>
                             </div>
                         </div>
 
                         <button type="submit" class="btn btn-block btn-primary font-weight-bold py-3">
-                            Đặt hàng COD
+                            @T["PlaceCodOrder"]
                         </button>
                     </div>
                 </div>
@@ -128,4 +148,4 @@
         </div>
     </form>
 </div>
-<!-- Checkout End -->
+<!-- Kết thúc thanh toán -->

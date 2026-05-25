@@ -1,5 +1,6 @@
 ﻿using DemoShop_QuaMonMot.Data;
 using DemoShop_QuaMonMot.Models;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -17,40 +18,57 @@ namespace DemoShop_QuaMonMot.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string sort, string? search, int page = 1, int record = 9, string[] priceRanges = null, int? maLoai = null)
+        private async Task LoadDanhMucAsync()
         {
-            var query = _context.HangHoas.AsQueryable();
-
-            // --- 1. Lấy danh sách Danh mục và đổi tên sang Tiếng Anh ---
             var danhmucgoc = await _context.Loais.Include(l => l.HangHoas).ToListAsync();
 
             var danhMuc = danhmucgoc.Select(l => new
             {
                 MaLoai = l.MaLoai,
-                // Map tên từ DB sang Tiếng Anh
                 TenLoai = l.TenLoai.ToLower() switch
                 {
                     "laptop" => "Laptop",
-                    "đồng hồ" => "Watch",
-                    "máy ảnh" => "Camera",
-                    "điện thoại" => "Phone",
-                    "nước hoa" => "Perfume",
-                    "trang sức" => "Jewelry",
-                    "giày" => "Shoes",
-                    "vali" => "Suitcase",
+                    "đồng hồ" => "Đồng hồ",
+                    "máy ảnh" => "Máy ảnh",
+                    "điện thoại" => "Điện thoại",
+                    "nước hoa" => "Nước hoa",
+                    "trang sức" => "Trang sức",
+                    "giày" => "Giày",
+                    "vali" => "Vali",
                     _ => l.TenLoai
                 },
                 SoLuong = l.HangHoas.Count()
             }).ToList();
 
             ViewBag.DanhMuc = danhMuc;
+        }
+
+        public async Task<IActionResult> TrangChu()
+        {
+            await LoadDanhMucAsync();
+
+            var products = await _context.HangHoas
+                .Include(h => h.MaLoaiNavigation)
+                .OrderByDescending(h => h.MaHh)
+                .Take(16)
+                .ToListAsync();
+
+            return View(products);
+        }
+
+        public async Task<IActionResult> Index(string? sort, string? search, int page = 1, int record = 9, string[]? priceRanges = null, int? maLoai = null)
+        {
+            var query = _context.HangHoas.AsQueryable();
+
+            // --- 1. Lấy danh sách danh mục ---
+            await LoadDanhMucAsync();
             // 2. Nếu có từ khóa tìm kiếm
             if (!string.IsNullOrEmpty(search))
             {
                 // Lọc sản phẩm có tên chứa từ khóa (không phân biệt hoa thường trong SQL)
                 query = query.Where(h => h.TenHh.Contains(search));
             }
-            // --- 2. Logic lọc theo Category ---
+            // --- 2. Logic lọc theo danh mục ---
             if (maLoai.HasValue)
             {
                 query = query.Where(h => h.MaLoai == maLoai.Value);
@@ -58,11 +76,16 @@ namespace DemoShop_QuaMonMot.Controllers
 
             // --- 3. Luôn luôn tính số lượng sản phẩm cho bộ lọc Giá (Để ngoài IF) ---
             ViewBag.AllCount = await _context.HangHoas.CountAsync();
-            ViewBag.Count0_100 = await _context.HangHoas.CountAsync(h => h.DonGia >= 0 && h.DonGia <= 100);
-            ViewBag.Count100_200 = await _context.HangHoas.CountAsync(h => h.DonGia > 100 && h.DonGia <= 200);
-            ViewBag.Count200_300 = await _context.HangHoas.CountAsync(h => h.DonGia > 200 && h.DonGia <= 300);
-            ViewBag.Count300_400 = await _context.HangHoas.CountAsync(h => h.DonGia > 300 && h.DonGia <= 400);
-            ViewBag.Count400_500 = await _context.HangHoas.CountAsync(h => h.DonGia > 400 && h.DonGia <= 500);
+            var priceRangeCounts = new Dictionary<string, int>();
+            for (var min = 0; min < 100; min += 10)
+            {
+                var max = min + 10;
+                priceRangeCounts[$"{min}-{max}"] = await _context.HangHoas
+                    .CountAsync(h => h.DonGia >= min && h.DonGia < max);
+            }
+            priceRangeCounts["100-plus"] = await _context.HangHoas
+                .CountAsync(h => h.DonGia >= 100);
+            ViewBag.PriceRangeCounts = priceRangeCounts;
 
             // --- 4. Logic lọc priceRanges ---
             if (priceRanges != null && priceRanges.Length > 0)
@@ -70,11 +93,21 @@ namespace DemoShop_QuaMonMot.Controllers
                 var allMatchedIds = new List<int>();
                 foreach (var range in priceRanges)
                 {
+                    if (range == "100-plus")
+                    {
+                        var ids = await _context.HangHoas
+                            .Where(h => h.DonGia >= 100)
+                            .Select(h => h.MaHh)
+                            .ToListAsync();
+                        allMatchedIds.AddRange(ids);
+                        continue;
+                    }
+
                     var parts = range.Split('-');
                     if (parts.Length == 2 && double.TryParse(parts[0], out double min) && double.TryParse(parts[1], out double max))
                     {
                         var ids = await _context.HangHoas
-                            .Where(h => h.DonGia >= min && h.DonGia <= max)
+                            .Where(h => h.DonGia >= min && h.DonGia < max)
                             .Select(h => h.MaHh)
                             .ToListAsync();
                         allMatchedIds.AddRange(ids);
@@ -135,6 +168,27 @@ namespace DemoShop_QuaMonMot.Controllers
             return View(hangHoa);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> LandingProducts(int take = 16)
+        {
+            var products = await _context.HangHoas
+                .OrderByDescending(h => h.MaHh)
+                .Take(take)
+                .Select(h => new
+                {
+                    id = h.MaHh,
+                    name = h.TenHh,
+                    price = h.DonGia ?? 0,
+                    oldPrice = Math.Round((h.DonGia ?? 0) * 1.1, 2),
+                    imageUrl = Url.Content("~/Hinh/HangHoa/" + (string.IsNullOrEmpty(h.Hinh) ? "default.jpg" : h.Hinh)),
+                    detailUrl = Url.Action("Detail", "Home", new { id = h.MaHh }),
+                    cartUrl = Url.Action("AddToCart", "Cart", new { id = h.MaHh })
+                })
+                .ToListAsync();
+
+            return Json(products);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -143,6 +197,21 @@ namespace DemoShop_QuaMonMot.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddYears(1),
+                    IsEssential = true
+                });
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

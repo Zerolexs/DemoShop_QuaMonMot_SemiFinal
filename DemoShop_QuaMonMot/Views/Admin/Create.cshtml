@@ -1,6 +1,6 @@
 ﻿@model DemoShop_QuaMonMot.Models.HangHoa
 @{
-    ViewData["Title"] = "Thêm sản phẩm";
+    ViewData["Title"] = T["CreateProductTitle"];
 }
 
 <div class="container-fluid">
@@ -9,47 +9,47 @@
             <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Tên sản phẩm</label>
+                        <label>@T["ProductName"]</label>
                         <input name="TenHh" class="form-control" required />
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Nhà cung cấp</label>
+                        <label>@T["Supplier"]</label>
                         <select name="MaNcc" class="form-control" asp-items="ViewBag.MaNcc"></select>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Loại sản phẩm</label>
+                        <label>@T["ProductType"]</label>
                         <select name="MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Ngày sản xuất</label>
+                        <label>@T["ProductionDate"]</label>
                         <input type="date" name="NgaySx" class="form-control" required />
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Đơn giá ($)</label>
+                        <label>@T["UnitPrice"] ($)</label>
                         <input name="DonGia" type="number" step="0.01" class="form-control" required />
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Giảm giá (%)</label>
+                        <label>@T["DiscountPercent"]</label>
                         <input name="GiamGia" type="number" class="form-control" value="0" />
                     </div>
 
                     <div class="col-md-12 form-group">
-                        <label>Hình ảnh</label>
+                        <label>@T["Image"]</label>
                         <input type="file" name="fHinh" class="form-control-file" />
                     </div>
 
                     <div class="col-md-12 form-group">
-                        <label>Mô tả chi tiết</label>
+                        <label>@T["DetailedDescription"]</label>
                         <textarea name="MoTa" class="form-control" rows="4"></textarea>
                     </div>
 
                     <div class="col-12 mt-3">
-                        <button type="submit" class="btn btn-primary font-weight-bold">Xác nhận Thêm</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold">@T["ConfirmAdd"]</button>
                     </div>
                 </div>
             </form>

@@ -1,0 +1,38 @@
+@model DemoShop_QuaMonMot.Models.HangHoa
+@{
+    var image = Url.Content("~/Hinh/HangHoa/" + (string.IsNullOrWhiteSpace(Model.Hinh) ? "1009.gif" : Model.Hinh));
+    var price = Model.DonGia ?? 0;
+}
+
+<div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+    <div class="product-item bg-light mb-4">
+        <div class="product-img position-relative overflow-hidden">
+            <img class="img-fluid w-100" src="@image" alt="@Model.TenHh">
+            <div class="product-action">
+                <a class="btn btn-outline-dark btn-square" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.MaHh">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+                <a class="btn btn-outline-dark btn-square btn-add-wishlist" asp-controller="YeuThich" asp-action="Add" asp-route-id="@Model.MaHh">
+                    <i class="far fa-heart"></i>
+                </a>
+                <a class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="Index">
+                    <i class="fa fa-sync-alt"></i>
+                </a>
+                <a class="btn btn-outline-dark btn-square" asp-controller="Home" asp-action="Detail" asp-route-id="@Model.MaHh">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
+        </div>
+        <div class="text-center py-4 px-2">
+            <a class="h6 text-decoration-none text-truncate d-block" asp-controller="Home" asp-action="Detail" asp-route-id="@Model.MaHh">@Model.TenHh</a>
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                <h5>$@price.ToString("F2")</h5>
+                <h6 class="text-muted ml-2"><del>$@((price * 1.1).ToString("F2"))</del></h6>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mb-1">
+                <small class="fa fa-eye text-primary mr-2"></small>
+                <small>@Model.SoLanXem @T["Views"]</small>
+            </div>
+        </div>
+    </div>
+</div>

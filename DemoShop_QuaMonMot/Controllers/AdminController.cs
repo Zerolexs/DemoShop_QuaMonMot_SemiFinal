@@ -35,11 +35,36 @@ namespace DemoShop_QuaMonMot.Controllers
             var hangHoa = new HangHoa();
             try
             {
-                hangHoa.TenHh = Request.Form["TenHh"];
-                hangHoa.MoTa = Request.Form["MoTa"]; 
-                hangHoa.DonGia = double.Parse(Request.Form["DonGia"]);
-                hangHoa.MaLoai = int.Parse(Request.Form["MaLoai"]);
-                hangHoa.MaNcc = Request.Form["MaNcc"];
+                var tenHh = Request.Form["TenHh"].ToString();
+                var maNcc = Request.Form["MaNcc"].ToString();
+
+                if (string.IsNullOrWhiteSpace(tenHh))
+                {
+                    ModelState.AddModelError("TenHh", "Vui lòng nhập tên sản phẩm.");
+                }
+
+                if (!double.TryParse(Request.Form["DonGia"], out var donGia))
+                {
+                    ModelState.AddModelError("DonGia", "Giá bán không hợp lệ.");
+                }
+
+                if (!int.TryParse(Request.Form["MaLoai"], out var maLoai))
+                {
+                    ModelState.AddModelError("MaLoai", "Danh mục không hợp lệ.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.MaLoai = new SelectList(_context.Loais, "MaLoai", "TenLoai");
+                    ViewBag.MaNcc = new SelectList(_context.NhaCungCaps, "MaNcc", "TenCongTy");
+                    return View(hangHoa);
+                }
+
+                hangHoa.TenHh = tenHh;
+                hangHoa.MoTa = Request.Form["MoTa"].ToString(); 
+                hangHoa.DonGia = donGia;
+                hangHoa.MaLoai = maLoai;
+                hangHoa.MaNcc = maNcc;
                 hangHoa.NgaySx = DateTime.Now;
                 hangHoa.TenAlias = Util.GenerateAlias(hangHoa.TenHh);
 
@@ -83,15 +108,35 @@ namespace DemoShop_QuaMonMot.Controllers
 
             try
             {
-                hangHoa.TenHh = Request.Form["TenHh"];
+                var tenHh = Request.Form["TenHh"].ToString();
+                var maNcc = Request.Form["MaNcc"].ToString();
+
+                if (string.IsNullOrWhiteSpace(tenHh))
+                {
+                    ModelState.AddModelError("TenHh", "Vui lòng nhập tên sản phẩm.");
+                }
+
+                if (!int.TryParse(Request.Form["MaLoai"], out var maLoai))
+                {
+                    ModelState.AddModelError("MaLoai", "Danh mục không hợp lệ.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.MaLoai = new SelectList(_context.Loais, "MaLoai", "TenLoai", hangHoa.MaLoai);
+                    ViewBag.MaNcc = new SelectList(_context.NhaCungCaps, "MaNcc", "TenCongTy", hangHoa.MaNcc);
+                    return View(hangHoa);
+                }
+
+                hangHoa.TenHh = tenHh;
                 hangHoa.TenAlias = hangHoa.TenHh.ToLower().Replace(" ", "-");
 
                 if (double.TryParse(Request.Form["DonGia"], out double gia)) hangHoa.DonGia = gia;
                 if (double.TryParse(Request.Form["GiamGia"], out double gg)) hangHoa.GiamGia = gg;
 
-                hangHoa.MoTa = Request.Form["MoTa"];
-                hangHoa.MaLoai = int.Parse(Request.Form["MaLoai"]);
-                hangHoa.MaNcc = Request.Form["MaNcc"];
+                hangHoa.MoTa = Request.Form["MoTa"].ToString();
+                hangHoa.MaLoai = maLoai;
+                hangHoa.MaNcc = maNcc;
 
                 if (DateTime.TryParse(Request.Form["NgaySx"], out DateTime nsx))
                     hangHoa.NgaySx = nsx;
@@ -144,7 +189,7 @@ namespace DemoShop_QuaMonMot.Controllers
                 // 4. Xóa thành công thì quay về trang chủ (hoặc trang danh sách admin)
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Nếu sản phẩm này đã có trong đơn hàng (khóa ngoại), DB sẽ báo lỗi không cho xóa
                 TempData["Error"] = "Không thể xóa sản phẩm này vì đã có dữ liệu liên quan trong hóa đơn!";

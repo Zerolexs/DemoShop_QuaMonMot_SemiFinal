@@ -3,7 +3,7 @@
 @{
     int currentPage = ViewBag.CurrentPage ?? 1;
     int totalPage = ViewBag.TotalPage ?? 1;
-    ViewData["Title"] = "Trang chủ - Danh sách sản phẩm";
+    ViewData["Title"] = T["ShopTitle"];
 
 }
 
@@ -23,11 +23,11 @@
             </div>
             <div class="ml-2">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sắp xếp</button>
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">@T["Sort"]</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "latest", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Mới nhất</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_asc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Giá tăng dần</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_desc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">Giá giảm dần</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "latest", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">@T["Latest"]</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_asc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">@T["PriceAsc"]</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", new { sort = "price_desc", loai = ViewBag.MaLoai, min = ViewBag.MinPrice, max = ViewBag.MaxPrice })">@T["PriceDesc"]</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
     {
         <div class="col-12 mb-4">
             <a asp-controller="Admin" asp-action="Create" class="btn btn-primary font-weight-bold py-2 px-4">
-                <i class="fa fa-plus mr-2"></i> Thêm sản phẩm mới
+                <i class="fa fa-plus mr-2"></i> @T["AddNewProduct"]
             </a>
         </div>
     }
@@ -89,19 +89,19 @@
 
                     <div class="d-flex align-items-center justify-content-center mb-1">
                         <small class="fa fa-eye text-primary mr-2"></small>
-                        <small>@item.SoLanXem lượt xem</small>
+                        <small>@item.SoLanXem @T["Views"]</small>
                     </div>
 
                     @if (Context.Session.GetInt32("VaiTro") == 1)
                     {
                         <div class="d-flex align-items-center justify-content-center mt-3 pt-2 border-top">
                             <a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.MaHh" class="btn btn-sm btn-warning mr-2">
-                                <i class="fa fa-edit"></i> Sửa
+                                <i class="fa fa-edit"></i> @T["Edit"]
                             </a>
                             <form asp-controller="Admin" asp-action="DeleteHangHoa" asp-route-id="@item.MaHh"
-                                  method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">
+                                  method="post" onsubmit="return confirm('@T["ConfirmDeleteProduct"]');">
                                 <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fa fa-trash"></i> Xóa
+                                    <i class="fa fa-trash"></i> @T["Delete"]
                                 </button>
                             </form>
                         </div>
@@ -118,7 +118,7 @@
                 <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
                     <a class="page-link" asp-controller="Home" asp-action="Index"
                        asp-route-page="@(currentPage - 1)"
-                       asp-route-search="@Context.Request.Query["search"]">Trước</a>
+                       asp-route-search="@Context.Request.Query["search"]">@T["Previous"]</a>
                 </li>
                 @for (int i = 1; i <= totalPage; i++)
                 {
@@ -131,7 +131,7 @@
                 <li class="page-item @(currentPage >= totalPage ? "disabled" : "")">
                     <a class="page-link" asp-controller="Home" asp-action="Index"
                        asp-route-page="@(currentPage + 1)"
-                       asp-route-search="@Context.Request.Query["search"]">Sau</a>
+                       asp-route-search="@Context.Request.Query["search"]">@T["Next"]</a>
                 </li>
             </ul>
         </nav>
@@ -177,18 +177,18 @@
                         if (res.action === "added") {
                             icon.removeClass("far").addClass("fas text-danger");
                             badges.text(currentCount + 1); // Cập nhật tất cả các badge
-                            alert("Đã thêm vào yêu thích!");
+                            alert("@T["AddedToWishlist"]");
                         } else {
                             icon.removeClass("fas text-danger").addClass("far");
                             badges.text(Math.max(0, currentCount - 1));
-                            alert("Đã bỏ khỏi yêu thích!");
+                            alert("@T["RemovedFromWishlist"]");
                         }
                     } else {
                         alert(res.message);
                         window.location.href = "/KhachHang/DangNhap";
                     }
                 }).fail(function() {
-                    alert("Lỗi kết nối máy chủ!");
+                    alert("@T["ServerConnectionError"]");
                 });
             });
         });
